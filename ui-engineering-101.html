@@ -75,6 +75,7 @@ body {
   letter-spacing: -0.5px;
   background: linear-gradient(135deg, var(--accent-light), var(--pink));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .nav-links {
@@ -171,6 +172,7 @@ body {
 .hero h1 .gradient {
   background: linear-gradient(135deg, var(--accent-light), var(--pink), var(--orange));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .hero p {
@@ -1966,6 +1968,186 @@ footer {
   .lesson-grid { grid-template-columns: 1fr; }
   .demo-container { padding: 24px; }
 }
+
+/* ========================================
+   SEARCH
+   ======================================== */
+.search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.search-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  background: rgba(124, 92, 252, 0.08);
+}
+.search-btn kbd {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: var(--text-muted);
+}
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+}
+.search-overlay.open { display: flex; }
+.search-box {
+  width: 100%;
+  max-width: 640px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(124,92,252,0.2);
+  overflow: hidden;
+  animation: searchIn 0.15s ease;
+}
+@keyframes searchIn {
+  from { opacity: 0; transform: scale(0.97) translateY(-8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  font-size: 16px;
+}
+.search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  caret-color: var(--accent);
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.search-close-btn:hover { color: var(--text-primary); }
+.search-results {
+  max-height: 420px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.search-results::-webkit-scrollbar { width: 4px; }
+.search-results::-webkit-scrollbar-track { background: transparent; }
+.search-results::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+.search-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.search-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  padding: 12px 20px 6px;
+}
+.search-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+}
+.search-result-item:hover,
+.search-result-item.selected {
+  background: rgba(124, 92, 252, 0.08);
+  border-left-color: var(--accent);
+}
+.search-result-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.search-result-title mark {
+  background: rgba(124, 92, 252, 0.3);
+  color: var(--accent-light);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.search-result-context {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.search-result-context mark {
+  background: rgba(124, 92, 252, 0.2);
+  color: var(--accent-light);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.search-result-module {
+  font-size: 11px;
+  color: var(--accent-light);
+  font-weight: 500;
+}
+.search-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.search-footer kbd {
+  font-family: var(--font-mono);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
 </style>
 </head>
 <body>
@@ -1988,7 +2170,37 @@ footer {
     <li><span data-target="module12">Shipping</span></li>
     <li><span data-target="module13">Animation</span></li>
   </ul>
+  <button type="button" class="search-btn" onclick="openSearch()" aria-label="Search course content">
+    <span>&#128269;</span> Search <kbd>⌘K</kbd>
+  </button>
 </nav>
+
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Search course content">
+    <div class="search-input-row">
+      <span class="search-icon">&#128269;</span>
+      <input
+        class="search-input"
+        id="searchInput"
+        type="text"
+        placeholder="Search topics, terms, concepts…"
+        autocomplete="off"
+        oninput="runSearch(this.value)"
+        onkeydown="handleSearchKey(event)"
+      >
+      <button type="button" class="search-close-btn" onclick="closeSearch()" aria-label="Close search">&#10005;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-empty">Type to search across all 13 modules</div>
+    </div>
+    <div class="search-footer">
+      <span><kbd>↑↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> jump to</span>
+      <span><kbd>Esc</kbd> close</span>
+    </div>
+  </div>
+</div>
 <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
 
 <!-- ============ HERO ============ -->
@@ -1996,7 +2208,7 @@ footer {
   <div class="hero-content">
     <div class="hero-badge">✦ Interactive Course — Inspired by Mariana Castiho</div>
     <h1>From Figma to<br><span class="gradient">Pixel-Perfect Code</span></h1>
-    <p>Master high-fidelity UI engineering. Learn design techniques, translate Figma designs into HTML & CSS, and apply advanced styling — all hands-on and interactive.</p>
+    <p>Master high-fidelity UI engineering. Learn design techniques, translate Figma designs into HTML &amp; CSS, and apply advanced styling — all hands-on and interactive.</p>
     <span class="hero-cta" onclick="document.getElementById('module1').scrollIntoView({behavior:'smooth'});" style="cursor:pointer;">Start Learning ↓</span>
   </div>
 </section>
@@ -2024,7 +2236,7 @@ footer {
     </div>
     <div class="info">
       <span class="lesson-tag tag-beginner">Beginner</span>
-      <h3>Color Systems & Palette Design</h3>
+      <h3>Color Systems &amp; Palette Design</h3>
       <p>Learn how to create harmonious color palettes, understand HSL color space, and build design tokens for consistent UI components.</p>
     </div>
   </div>
@@ -2207,7 +2419,7 @@ footer {
 <section class="module-section" id="module2">
   <div class="module-header">
     <div class="module-number">Module 02</div>
-    <h2 class="module-title">HTML & CSS Implementation</h2>
+    <h2 class="module-title">HTML &amp; CSS Implementation</h2>
     <p class="module-desc">Translate Figma designs into pixel-perfect code. No previous coding experience needed — we start from scratch and build up to real components.</p>
   </div>
 
@@ -2221,15 +2433,15 @@ footer {
         &nbsp;&nbsp;Playground — Build a Button Component
       </div>
       <div class="playground-actions">
-        <button onclick="resetPlayground('pg1')">Reset</button>
-        <button class="primary" onclick="runPlayground('pg1')">▶ Run</button>
+        <button type="button" onclick="resetPlayground('pg1')">Reset</button>
+        <button type="button" class="primary" onclick="runPlayground('pg1')">▶ Run</button>
       </div>
     </div>
     <div class="playground-body">
       <div class="editor-pane">
         <div class="editor-tabs">
-          <button class="editor-tab active" onclick="switchTab(this, 'pg1', 'html')">index.html</button>
-          <button class="editor-tab" onclick="switchTab(this, 'pg1', 'css')">styles.css</button>
+          <button type="button" class="editor-tab active" onclick="switchTab(this, 'pg1', 'html')">index.html</button>
+          <button type="button" class="editor-tab" onclick="switchTab(this, 'pg1', 'css')">styles.css</button>
         </div>
         <textarea class="code-editor" id="pg1-html" spellcheck="false" oninput="runPlayground('pg1')"><div class="card">
   <div class="card-image">
@@ -2328,7 +2540,7 @@ p {
       </div>
       <div class="preview-pane">
         <div class="preview-label">Preview</div>
-        <iframe id="pg1-preview"></iframe>
+        <iframe title="Code preview pg1-preview" id="pg1-preview"></iframe>
       </div>
     </div>
   </div>
@@ -2371,15 +2583,15 @@ p {
         &nbsp;&nbsp;Playground — Build an Input Component
       </div>
       <div class="playground-actions">
-        <button onclick="resetPlayground('pg2')">Reset</button>
-        <button class="primary" onclick="runPlayground('pg2')">▶ Run</button>
+        <button type="button" onclick="resetPlayground('pg2')">Reset</button>
+        <button type="button" class="primary" onclick="runPlayground('pg2')">▶ Run</button>
       </div>
     </div>
     <div class="playground-body">
       <div class="editor-pane">
         <div class="editor-tabs">
-          <button class="editor-tab active" onclick="switchTab(this, 'pg2', 'html')">index.html</button>
-          <button class="editor-tab" onclick="switchTab(this, 'pg2', 'css')">styles.css</button>
+          <button type="button" class="editor-tab active" onclick="switchTab(this, 'pg2', 'html')">index.html</button>
+          <button type="button" class="editor-tab" onclick="switchTab(this, 'pg2', 'css')">styles.css</button>
         </div>
         <textarea class="code-editor" id="pg2-html" spellcheck="false" oninput="runPlayground('pg2')"><div class="form-group">
   <label for="email">Email Address</label>
@@ -2487,7 +2699,7 @@ input::placeholder {
       </div>
       <div class="preview-pane">
         <div class="preview-label">Preview</div>
-        <iframe id="pg2-preview"></iframe>
+        <iframe title="Code preview pg2-preview" id="pg2-preview"></iframe>
       </div>
     </div>
   </div>
@@ -2520,7 +2732,7 @@ input::placeholder {
 <section class="module-section" id="module3">
   <div class="module-header">
     <div class="module-number">Module 03</div>
-    <h2 class="module-title">CSS Layouts & Box Model</h2>
+    <h2 class="module-title">CSS Layouts &amp; Box Model</h2>
     <p class="module-desc">Understand how CSS lays out elements — from the box model to flexbox and grid. Master the building techniques that structure every web page.</p>
   </div>
 
@@ -2580,7 +2792,7 @@ input::placeholder {
    width: 200px + padding: 20px + border: 2px = 244px total
 
    With border-box:
-   width: 200px total (padding & border fit inside) */</span></pre>
+   width: 200px total (padding &amp; border fit inside) */</span></pre>
     </div>
   </div>
 
@@ -2892,15 +3104,15 @@ input::placeholder {
         &nbsp;&nbsp;Playground — Glassmorphism Card
       </div>
       <div class="playground-actions">
-        <button onclick="resetPlayground('pg3')">Reset</button>
-        <button class="primary" onclick="runPlayground('pg3')">▶ Run</button>
+        <button type="button" onclick="resetPlayground('pg3')">Reset</button>
+        <button type="button" class="primary" onclick="runPlayground('pg3')">▶ Run</button>
       </div>
     </div>
     <div class="playground-body">
       <div class="editor-pane">
         <div class="editor-tabs">
-          <button class="editor-tab active" onclick="switchTab(this, 'pg3', 'html')">index.html</button>
-          <button class="editor-tab" onclick="switchTab(this, 'pg3', 'css')">styles.css</button>
+          <button type="button" class="editor-tab active" onclick="switchTab(this, 'pg3', 'html')">index.html</button>
+          <button type="button" class="editor-tab" onclick="switchTab(this, 'pg3', 'css')">styles.css</button>
         </div>
         <textarea class="code-editor" id="pg3-html" spellcheck="false" oninput="runPlayground('pg3')"><div class="scene">
   <div class="orb orb-1"></div>
@@ -3022,7 +3234,7 @@ p {
       </div>
       <div class="preview-pane">
         <div class="preview-label">Preview</div>
-        <iframe id="pg3-preview"></iframe>
+        <iframe title="Code preview pg3-preview" id="pg3-preview"></iframe>
       </div>
     </div>
   </div>
@@ -3387,10 +3599,10 @@ p {
     <div class="theme-switcher-demo">
       <div class="theme-demo-toolbar">
         <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-right: 8px;">Theme:</span>
-        <button class="theme-btn active" onclick="switchTheme('dark', this)">Dark</button>
-        <button class="theme-btn" onclick="switchTheme('light', this)">Light</button>
-        <button class="theme-btn" onclick="switchTheme('ocean', this)">Ocean</button>
-        <button class="theme-btn" onclick="switchTheme('sunset', this)">Sunset</button>
+        <button type="button" class="theme-btn active" onclick="switchTheme('dark', this)">Dark</button>
+        <button type="button" class="theme-btn" onclick="switchTheme('light', this)">Light</button>
+        <button type="button" class="theme-btn" onclick="switchTheme('ocean', this)">Ocean</button>
+        <button type="button" class="theme-btn" onclick="switchTheme('sunset', this)">Sunset</button>
       </div>
       <div class="theme-demo-preview" id="themePreview" style="background: #0f0f1a;">
         <div class="theme-demo-card" id="themeCard" style="background: #1c1c2e; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
@@ -3402,7 +3614,7 @@ p {
           <div class="theme-demo-card-body" id="themeBody" style="background: #1c1c2e;">
             <div class="theme-demo-badge" id="themeBadge" style="background: rgba(124,92,252,0.15); color: #9b82fc;">New Module</div>
             <div class="theme-demo-text" id="themeText" style="color: #9999aa;">Tokens let you change your entire design system by updating a single file. Dark mode, brand themes, seasonal updates — all powered by the same components.</div>
-            <button class="theme-demo-btn" id="themeBtn" style="background: #7c5cfc; color: white;">Get Started →</button>
+            <button type="button" class="theme-demo-btn" id="themeBtn" style="background: #7c5cfc; color: white;">Get Started →</button>
           </div>
         </div>
       </div>
@@ -3426,15 +3638,15 @@ p {
         &nbsp;&nbsp;Exercise — Build Your Own Token System
       </div>
       <div class="playground-actions">
-        <button onclick="resetPlayground('pg4')">Reset</button>
-        <button class="primary" onclick="runPlayground('pg4')">▶ Run</button>
+        <button type="button" onclick="resetPlayground('pg4')">Reset</button>
+        <button type="button" class="primary" onclick="runPlayground('pg4')">▶ Run</button>
       </div>
     </div>
     <div class="playground-body">
       <div class="editor-pane">
         <div class="editor-tabs">
-          <button class="editor-tab active" onclick="switchTab(this, 'pg4', 'html')">index.html</button>
-          <button class="editor-tab" onclick="switchTab(this, 'pg4', 'css')">tokens.css</button>
+          <button type="button" class="editor-tab active" onclick="switchTab(this, 'pg4', 'html')">index.html</button>
+          <button type="button" class="editor-tab" onclick="switchTab(this, 'pg4', 'css')">tokens.css</button>
         </div>
         <textarea class="code-editor" id="pg4-html" spellcheck="false" oninput="runPlayground('pg4')"><div class="page">
   <nav class="navbar">
@@ -3668,7 +3880,7 @@ body {
       </div>
       <div class="preview-pane">
         <div class="preview-label">Preview</div>
-        <iframe id="pg4-preview"></iframe>
+        <iframe title="Code preview pg4-preview" id="pg4-preview"></iframe>
       </div>
     </div>
   </div>
@@ -4124,7 +4336,7 @@ body {
           <div style="font-size: 14px; font-weight: 700; color: #333; margin-bottom: 8px;">Sign Up</div>
           <input type="text" placeholder="Email" style="width: 100%; padding: 6px; border: 1px solid #ccc; margin-bottom: 6px; font-size: 12px;">
           <input type="password" placeholder="Password" style="width: 100%; padding: 6px; border: 1px solid #ccc; margin-bottom: 8px; font-size: 12px;">
-          <button style="padding: 6px 12px; background: #666; color: white; border: none; font-size: 12px; cursor: pointer;">Submit</button>
+          <button type="button" style="padding: 6px 12px; background: #666; color: white; border: none; font-size: 12px; cursor: pointer;">Submit</button>
         </div>
         <div style="font-size: 12px; font-weight: 600; color: #999; margin-top: 12px;">Without polish</div>
       </div>
@@ -4135,7 +4347,7 @@ body {
           <div style="font-size: 12px; color: #888; margin-bottom: 16px;">Create your free account</div>
           <input type="text" placeholder="you@example.com" style="width: 100%; padding: 10px 14px; border: 2px solid #e8e8f0; border-radius: 10px; margin-bottom: 10px; font-size: 13px; font-family: inherit; outline: none; box-sizing: border-box;">
           <input type="password" placeholder="Password" style="width: 100%; padding: 10px 14px; border: 2px solid #e8e8f0; border-radius: 10px; margin-bottom: 14px; font-size: 13px; font-family: inherit; outline: none; box-sizing: border-box;">
-          <button style="width: 100%; padding: 11px; background: #7c5cfc; color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;">Create Account →</button>
+          <button type="button" style="width: 100%; padding: 11px; background: #7c5cfc; color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;">Create Account →</button>
         </div>
         <div style="font-size: 12px; font-weight: 600; color: #34d399; margin-top: 12px;">With polish — same functionality</div>
       </div>
@@ -4201,11 +4413,11 @@ body {
     <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Click any card to expand the <strong style="color: var(--green);">When</strong> → <strong style="color: var(--blue);">Why</strong> → <strong style="color: var(--pink);">How</strong> → <strong style="color: var(--orange);">Token Tip</strong> breakdown.</p>
 
     <div class="filter-bar">
-      <button class="filter-pill active" onclick="filterLaws('all', this)">All</button>
-      <button class="filter-pill" onclick="filterLaws('heuristic', this)">Heuristics</button>
-      <button class="filter-pill" onclick="filterLaws('gestalt', this)">Gestalt</button>
-      <button class="filter-pill" onclick="filterLaws('cognitive', this)">Cognitive Bias</button>
-      <button class="filter-pill" onclick="filterLaws('principle', this)">Principles</button>
+      <button type="button" class="filter-pill active" onclick="filterLaws('all', this)">All</button>
+      <button type="button" class="filter-pill" onclick="filterLaws('heuristic', this)">Heuristics</button>
+      <button type="button" class="filter-pill" onclick="filterLaws('gestalt', this)">Gestalt</button>
+      <button type="button" class="filter-pill" onclick="filterLaws('cognitive', this)">Cognitive Bias</button>
+      <button type="button" class="filter-pill" onclick="filterLaws('principle', this)">Principles</button>
     </div>
 
     <div class="law-card-grid" id="lawGrid">
@@ -4547,7 +4759,7 @@ body {
 <section class="module-section" id="module7">
   <div class="module-header">
     <div class="module-number">Module 07</div>
-    <h2 class="module-title">Components & States</h2>
+    <h2 class="module-title">Components &amp; States</h2>
     <p class="module-desc">Every UI component has multiple states — default, hover, focus, active, disabled, loading, error. Designing and building all states is what separates production-quality components from prototypes.</p>
   </div>
 
@@ -4557,15 +4769,15 @@ body {
     <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Click each state to see how a single button component transforms. Every state should feel intentional and provide clear feedback.</p>
     <div class="state-machine">
       <div class="state-buttons">
-        <button class="state-trigger active" onclick="setButtonState('default', this)">Default</button>
-        <button class="state-trigger" onclick="setButtonState('hover', this)">Hover</button>
-        <button class="state-trigger" onclick="setButtonState('focus', this)">Focus</button>
-        <button class="state-trigger" onclick="setButtonState('active', this)">Active / Pressed</button>
-        <button class="state-trigger" onclick="setButtonState('disabled', this)">Disabled</button>
-        <button class="state-trigger" onclick="setButtonState('loading', this)">Loading</button>
+        <button type="button" class="state-trigger active" onclick="setButtonState('default', this)">Default</button>
+        <button type="button" class="state-trigger" onclick="setButtonState('hover', this)">Hover</button>
+        <button type="button" class="state-trigger" onclick="setButtonState('focus', this)">Focus</button>
+        <button type="button" class="state-trigger" onclick="setButtonState('active', this)">Active / Pressed</button>
+        <button type="button" class="state-trigger" onclick="setButtonState('disabled', this)">Disabled</button>
+        <button type="button" class="state-trigger" onclick="setButtonState('loading', this)">Loading</button>
       </div>
       <div class="component-preview" id="btnPreview">
-        <button id="stateBtn" style="padding: 14px 32px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; background: #7c5cfc; color: white; cursor: pointer; font-family: inherit; transition: all 0.2s; outline: none;">Subscribe</button>
+        <button type="button" id="stateBtn" style="padding: 14px 32px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; background: #7c5cfc; color: white; cursor: pointer; font-family: inherit; transition: all 0.2s; outline: none;">Subscribe</button>
       </div>
       <div id="stateCSS" style="width: 100%; background: var(--bg-editor); border-radius: 8px; padding: 16px; font-family: var(--font-mono); font-size: 12px; line-height: 1.7; color: var(--accent-light);"></div>
     </div>
@@ -4628,8 +4840,8 @@ body {
         </div>
         <!-- Actions -->
         <div style="padding: 0 20px 20px; display: flex; gap: 8px; position: relative;">
-          <button style="padding: 10px 20px; background: #7c5cfc; color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;">Primary</button>
-          <button style="padding: 10px 20px; background: transparent; color: #666; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;">Secondary</button>
+          <button type="button" style="padding: 10px 20px; background: #7c5cfc; color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;">Primary</button>
+          <button type="button" style="padding: 10px 20px; background: transparent; color: #666; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;">Secondary</button>
           <div style="position: absolute; top: -4px; right: 8px; background: rgba(0,0,0,0.4); color: white; padding: 2px 6px; border-radius: 4px; font-size: 8px; font-family: var(--font-mono);">slot: actions</div>
         </div>
       </div>
@@ -4651,7 +4863,7 @@ body {
 <section class="module-section" id="module8">
   <div class="module-header">
     <div class="module-number">Module 08</div>
-    <h2 class="module-title">Forms & Validation</h2>
+    <h2 class="module-title">Forms &amp; Validation</h2>
     <p class="module-desc">Forms are where users give you data — and where most frustration happens. Great form design combines clear labels, instant validation, helpful error messages, and accessible markup.</p>
   </div>
 
@@ -4802,18 +5014,18 @@ body {
     <!-- Modal trigger -->
     <div>
       <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">3. Modal / Dialog</h4>
-      <button onclick="openDemoModal()" style="padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-sans); transition: all 0.2s;">Open Modal →</button>
+      <button type="button" onclick="openDemoModal()" style="padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-sans); transition: all 0.2s;">Open Modal →</button>
     </div>
   </div>
 
   <!-- Modal (hidden by default) -->
   <div id="demoModal" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);">
     <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:20px; padding:32px; max-width:420px; width:90%; position:relative; animation:modalIn 0.3s ease;">
-      <button onclick="closeDemoModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:4px;">✕</button>
+      <button type="button" onclick="closeDemoModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:4px;">✕</button>
       <div style="font-size: 32px; text-align: center; margin-bottom: 12px;">🎉</div>
       <h3 style="font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px;">Modal Component</h3>
       <p style="font-size: 14px; color: var(--text-secondary); text-align: center; line-height: 1.6; margin-bottom: 24px;">This uses a backdrop overlay, focus trapping, and keyboard dismissal (try pressing Escape). Essential for dialogs, confirmations, and overlays.</p>
-      <button onclick="closeDemoModal()" style="width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:var(--font-sans);">Got it!</button>
+      <button type="button" onclick="closeDemoModal()" style="width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:var(--font-sans);">Got it!</button>
     </div>
   </div>
 
@@ -4903,7 +5115,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
 
   <!-- Keyboard & Screen Reader -->
   <div class="demo-container">
-    <div class="demo-label">⌨️ Visual — Keyboard Navigation & ARIA</div>
+    <div class="demo-label">⌨️ Visual — Keyboard Navigation &amp; ARIA</div>
     <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">Every interactive element must be reachable and usable with keyboard alone. Here are the essential ARIA patterns:</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
       <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
@@ -4983,7 +5195,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
 <section class="module-section" id="module11">
   <div class="module-header">
     <div class="module-number">Module 11</div>
-    <h2 class="module-title">Performance & Core Web Vitals</h2>
+    <h2 class="module-title">Performance &amp; Core Web Vitals</h2>
     <p class="module-desc">A beautiful UI that loads slowly is a failed UI. Google's Core Web Vitals measure real-world user experience — and they directly impact SEO, conversion, and user satisfaction.</p>
   </div>
 
@@ -5064,7 +5276,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
       <div style="display: flex; align-items: center; gap: 16px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px;">
         <div style="font-size: 24px; min-width: 40px; text-align: center;">🎭</div>
         <div style="flex: 1;">
-          <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Animate only transform & opacity</div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Animate only transform &amp; opacity</div>
           <div style="font-size: 12px; color: var(--text-muted);">These are GPU-composited. Animating <code>width</code>, <code>height</code>, or <code>top</code> triggers expensive layout recalculations.</div>
         </div>
         <div style="padding: 4px 10px; background: rgba(251,146,60,0.15); color: var(--orange); font-size: 10px; font-weight: 700; border-radius: 100px;">MEDIUM</div>
@@ -5088,7 +5300,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
 <section class="module-section" id="module12">
   <div class="module-header">
     <div class="module-number">Module 12</div>
-    <h2 class="module-title">Shipping & Maintaining UI</h2>
+    <h2 class="module-title">Shipping &amp; Maintaining UI</h2>
     <p class="module-desc">Building UI is half the job. The other half is shipping it reliably, keeping it consistent across a team, and maintaining it as the product evolves. This is what separates side projects from production.</p>
   </div>
 
@@ -5100,7 +5312,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
     <div style="max-width: 600px; margin: 0 auto;">
       <div class="ship-phase">
         <div class="ship-dot" style="background: var(--accent);"></div>
-        <h4 style="color: var(--accent-light);">1. Design & Spec</h4>
+        <h4 style="color: var(--accent-light);">1. Design &amp; Spec</h4>
         <p>Define component variants, states, responsive behavior, and edge cases in Figma. Create a handoff spec document.</p>
         <div class="ship-items">
           <span class="ship-item">Figma components</span>
@@ -5111,7 +5323,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
       </div>
       <div class="ship-phase">
         <div class="ship-dot" style="background: var(--blue);"></div>
-        <h4 style="color: var(--blue);">2. Build & Review</h4>
+        <h4 style="color: var(--blue);">2. Build &amp; Review</h4>
         <p>Implement with tokens, test across browsers, get code review. Match Figma pixel-for-pixel.</p>
         <div class="ship-items">
           <span class="ship-item">HTML/CSS/JS</span>
@@ -5122,7 +5334,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
       </div>
       <div class="ship-phase">
         <div class="ship-dot" style="background: var(--green);"></div>
-        <h4 style="color: var(--green);">3. Test & Validate</h4>
+        <h4 style="color: var(--green);">3. Test &amp; Validate</h4>
         <p>Visual regression testing, accessibility audit, performance check, and user testing.</p>
         <div class="ship-items">
           <span class="ship-item">Visual regression</span>
@@ -5133,7 +5345,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
       </div>
       <div class="ship-phase">
         <div class="ship-dot" style="background: var(--orange);"></div>
-        <h4 style="color: var(--orange);">4. Document & Ship</h4>
+        <h4 style="color: var(--orange);">4. Document &amp; Ship</h4>
         <p>Write usage docs, add to the component library, deploy, and communicate changes to the team.</p>
         <div class="ship-items">
           <span class="ship-item">Storybook/docs</span>
@@ -5144,7 +5356,7 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
       </div>
       <div class="ship-phase">
         <div class="ship-dot" style="background: var(--pink);"></div>
-        <h4 style="color: var(--pink);">5. Monitor & Iterate</h4>
+        <h4 style="color: var(--pink);">5. Monitor &amp; Iterate</h4>
         <p>Track real-world usage, gather feedback, fix bugs, and plan improvements based on data.</p>
         <div class="ship-items">
           <span class="ship-item">Error tracking</span>
@@ -5352,13 +5564,13 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
 
   <div class="section-divider"></div>
 
-  <!-- Timing & Duration -->
+  <!-- Timing &amp; Duration -->
   <div class="demo-container">
-    <div class="demo-label">⏱️ Interactive — Timing & Duration</div>
+    <div class="demo-label">⏱️ Interactive — Timing &amp; Duration</div>
     <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;"><strong style="color: var(--text-primary);">Duration is about matching the size and importance of the change.</strong></p>
     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Click "Play All" to see every duration tier animate simultaneously. Small = fast. Large = slower. Exit = faster than enter.</p>
 
-    <button onclick="playTimingDemo()" style="padding: 10px 24px; background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-sans); margin-bottom: 24px; transition: all 0.2s;">▶ Play All</button>
+    <button type="button" onclick="playTimingDemo()" style="padding: 10px 24px; background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-sans); margin-bottom: 24px; transition: all 0.2s;">▶ Play All</button>
 
     <div class="timing-comparison">
       <div class="timing-row">
@@ -5473,18 +5685,18 @@ modal.addEventListener(<span class="highlight-val">'keydown'</span>, (e) => {
         <span class="dot dot-red"></span>
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
-        &nbsp;&nbsp;Playground — CSS Transforms, Transitions & Keyframes
+        &nbsp;&nbsp;Playground — CSS Transforms, Transitions &amp; Keyframes
       </div>
       <div class="playground-actions">
-        <button onclick="resetPlayground('pg5')">Reset</button>
-        <button class="primary" onclick="runPlayground('pg5')">▶ Run</button>
+        <button type="button" onclick="resetPlayground('pg5')">Reset</button>
+        <button type="button" class="primary" onclick="runPlayground('pg5')">▶ Run</button>
       </div>
     </div>
     <div class="playground-body">
       <div class="editor-pane">
         <div class="editor-tabs">
-          <button class="editor-tab active" onclick="switchTab(this, 'pg5', 'html')">index.html</button>
-          <button class="editor-tab" onclick="switchTab(this, 'pg5', 'css')">styles.css</button>
+          <button type="button" class="editor-tab active" onclick="switchTab(this, 'pg5', 'html')">index.html</button>
+          <button type="button" class="editor-tab" onclick="switchTab(this, 'pg5', 'css')">styles.css</button>
         </div>
         <textarea class="code-editor" id="pg5-html" spellcheck="false" oninput="runPlayground('pg5')"><div class="demo-scene">
   <h3>Hover each element</h3>
@@ -5579,7 +5791,7 @@ h3 { font-size: 14px; color: #666; margin: 20px 0 12px; }
       </div>
       <div class="preview-pane">
         <div class="preview-label">Preview</div>
-        <iframe id="pg5-preview"></iframe>
+        <iframe title="Code preview pg5-preview" id="pg5-preview"></iframe>
       </div>
     </div>
   </div>
@@ -5736,7 +5948,7 @@ h3 { font-size: 14px; color: #666; margin: 20px 0 12px; }
           <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">✓</div>
           <span style="font-size: 13px; font-weight: 500;">Changes saved</span>
         </div>
-        <button onclick="playMotionToast()" style="margin-top: 16px; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); font-size: 12px; cursor: pointer; font-family: var(--font-sans);">Trigger toast</button>
+        <button type="button" onclick="playMotionToast()" style="margin-top: 16px; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); font-size: 12px; cursor: pointer; font-family: var(--font-sans);">Trigger toast</button>
       </div>
       <div class="motion-panel">
         <h5 style="color: var(--pink);">Staggered List</h5>
@@ -5746,7 +5958,7 @@ h3 { font-size: 14px; color: #666; margin: 20px 0 12px; }
           <div class="motion-list-item" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 12px; opacity: 0; transform: translateY(8px); transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1); transition-delay: 100ms;">Item 3</div>
           <div class="motion-list-item" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 12px; opacity: 0; transform: translateY(8px); transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1); transition-delay: 150ms;">Item 4</div>
         </div>
-        <button onclick="playMotionList()" style="margin-top: 16px; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); font-size: 12px; cursor: pointer; font-family: var(--font-sans);">Trigger list</button>
+        <button type="button" onclick="playMotionList()" style="margin-top: 16px; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); font-size: 12px; cursor: pointer; font-family: var(--font-sans);">Trigger list</button>
       </div>
     </div>
   </div>
@@ -5768,7 +5980,7 @@ h3 { font-size: 14px; color: #666; margin: 20px 0 12px; }
 
 <!-- ============ FOOTER ============ -->
 <footer>
-  <p>UI Engineering 101 — Inspired by Mariana Castiho & Emil Kowalski</p>
+  <p>UI Engineering 101 — Inspired by Mariana Castiho &amp; Emil Kowalski</p>
   <p style="margin-top: 8px; font-size: 12px;">Interactive course built for visual thinkers · <a href="https://lawsofux.com" style="color: var(--accent-light); text-decoration: none;">lawsofux.com</a> · <a href="https://animations.dev" style="color: var(--accent-light); text-decoration: none;">animations.dev</a></p>
 </footer>
 
@@ -6437,6 +6649,281 @@ function playMotionList() {
   });
 }
 
+// ========== Search ==========
+let searchIndex = [];
+let searchSelectedIdx = -1;
+
+function buildSearchIndex() {
+  searchIndex = [];
+
+  const SKIP_TAGS = new Set(['TEXTAREA', 'SCRIPT', 'STYLE', 'IFRAME', 'NOSCRIPT', 'SVG']);
+  const SKIP_CLASSES = ['code-editor', 'editor-pane', 'preview-pane', 'playground-body'];
+  const HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
+  // PRE is a leaf: grab el.textContent so text nodes between highlight spans
+  // (e.g. "trigger.addEventListener(") aren't silently dropped.
+  const LEAF_TAGS = new Set(['P', 'LI', 'DT', 'DD', 'BLOCKQUOTE', 'CAPTION', 'PRE']);
+  let anchorSeq = 0;
+
+  function shouldSkip(el) {
+    if (SKIP_TAGS.has(el.tagName)) return true;
+    return SKIP_CLASSES.some(cls => el.classList.contains(cls));
+  }
+
+  // Ensure an element has an id, minting one if needed
+  function ensureId(el, fallback) {
+    if (!el.id) el.id = fallback + '-' + (++anchorSeq);
+    return el.id;
+  }
+
+  document.querySelectorAll('.module-section').forEach(section => {
+    const moduleId = section.getAttribute('id');
+    const moduleNum = section.querySelector('.module-number')?.textContent?.trim() || '';
+    const moduleTitle = section.querySelector('.module-title')?.textContent?.trim() || moduleId;
+    const moduleLabel = [moduleNum, moduleTitle].filter(Boolean).join(' — ');
+
+    const blocks = [];
+    // anchorEl tracks the specific element to scroll to for the current block.
+    // For the module intro block that's the section itself; for sub-blocks it's
+    // the h3/h4 heading that opened the block.
+    let current = { title: moduleTitle, anchorEl: section, texts: [] };
+
+    function flush() {
+      if (current.texts.length) {
+        blocks.push({
+          title: current.title,
+          targetId: ensureId(current.anchorEl, 'sa'),
+          texts: [...current.texts],
+        });
+      }
+      current.texts = [];
+    }
+
+    function walk(el) {
+      if (shouldSkip(el)) return;
+
+      if (HEADING_TAGS.has(el.tagName)) {
+        const heading = el.textContent.replace(/\s+/g, ' ').trim();
+        if (heading && heading !== moduleTitle) {
+          flush();
+          current.title = heading;
+          current.anchorEl = el; // scroll target = this exact heading
+        }
+        return;
+      }
+
+      if (LEAF_TAGS.has(el.tagName)) {
+        const t = el.textContent.replace(/\s+/g, ' ').trim();
+        if (t.length > 3) current.texts.push(t);
+        return;
+      }
+
+      let directText = '';
+      el.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) directText += node.textContent;
+      });
+      directText = directText.replace(/\s+/g, ' ').trim();
+      if (directText.length > 3 && !el.children.length) {
+        current.texts.push(directText);
+      }
+
+      Array.from(el.children).forEach(walk);
+    }
+
+    Array.from(section.children).forEach(walk);
+    flush();
+
+    // --- Separate pass: index <textarea class="code-editor"> playground code ---
+    // These are skipped by the main walker because their parent .editor-pane is
+    // in SKIP_CLASSES. We query them directly and create one index entry per textarea.
+    section.querySelectorAll('textarea.code-editor').forEach(textarea => {
+      const code = (textarea.value || textarea.textContent || '').replace(/\s+/g, ' ').trim();
+      if (code.length < 6) return;
+      const lang = textarea.id && textarea.id.includes('-css') ? 'CSS' : 'HTML';
+      // Scroll anchor: the playground container, or the section as fallback
+      const anchor = textarea.closest('.playground') || section;
+      searchIndex.push({
+        moduleId,
+        targetId: ensureId(anchor, 'sa'),
+        module: moduleLabel,
+        title: `Playground code (${lang})`,
+        fullText: ('playground code ' + lang + ' ' + code).toLowerCase(),
+        displayContext: code,
+      });
+    });
+
+    blocks.forEach(block => {
+      const bodyText = block.texts.join(' ');
+      if (!bodyText.trim()) return;
+      searchIndex.push({
+        moduleId,                // used for deduplication grouping
+        targetId: block.targetId, // exact element to scroll to
+        module: moduleLabel,
+        title: block.title,
+        fullText: (block.title + ' ' + bodyText).toLowerCase(),
+        displayContext: bodyText,
+      });
+    });
+  });
+}
+
+// Extract a snippet centred on the first match of `query` inside `text`
+function getSnippet(text, query, maxLen = 160) {
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx === -1) return text.slice(0, maxLen) + (text.length > maxLen ? '…' : '');
+  const pad = 60;
+  const start = Math.max(0, idx - pad);
+  const end = Math.min(text.length, idx + query.length + (maxLen - pad));
+  let snippet = text.slice(start, end);
+  if (start > 0) snippet = '…' + snippet;
+  if (end < text.length) snippet += '…';
+  return snippet;
+}
+
+function highlight(text, query) {
+  if (!query || !text) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
+}
+
+function runSearch(query) {
+  searchSelectedIdx = -1;
+  const container = document.getElementById('searchResults');
+  const q = query.trim().toLowerCase();
+
+  if (!q) {
+    container.innerHTML = '<div class="search-empty">Type to search across all 13 modules</div>';
+    return;
+  }
+
+  const scored = searchIndex
+    .map(item => {
+      const titleLower = item.title.toLowerCase();
+      let score = 0;
+      if (titleLower === q)               score = 100;
+      else if (titleLower.startsWith(q))  score = 80;
+      else if (titleLower.includes(q))    score = 60;
+      else if (item.fullText.includes(q)) score = 20;
+      return { ...item, score };
+    })
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  // Deduplicate by (targetId) — each heading block is unique
+  const seen = new Set();
+  const deduped = scored.filter(item => {
+    if (seen.has(item.targetId)) return false;
+    seen.add(item.targetId);
+    return true;
+  }).slice(0, 20);
+
+  if (!deduped.length) {
+    container.innerHTML = `<div class="search-empty">No results for "<strong style="color:var(--text-primary)">${query}</strong>"</div>`;
+    return;
+  }
+
+  // Group by module
+  const groups = {};
+  deduped.forEach(item => {
+    if (!groups[item.module]) groups[item.module] = [];
+    groups[item.module].push(item);
+  });
+
+  let html = '';
+  Object.entries(groups).forEach(([moduleLabel, items]) => {
+    html += `<div class="search-group-label">${moduleLabel}</div>`;
+    items.forEach(item => {
+      const titleHtml = highlight(item.title, query);
+      const snippet = getSnippet(item.displayContext, query);
+      const contextHtml = snippet ? highlight(snippet, query) : '';
+      html += `<div class="search-result-item" data-target="${item.targetId}" onclick="jumpToResult(this)">
+        <div class="search-result-title">${titleHtml}</div>
+        ${contextHtml ? `<div class="search-result-context">${contextHtml}</div>` : ''}
+      </div>`;
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+function jumpToResult(el) {
+  const targetId = el.getAttribute('data-target');
+  const target = document.getElementById(targetId);
+  if (!target) return;
+  closeSearch();
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Brief highlight flash so the user can see exactly where they landed
+    target.style.transition = 'background 0s';
+    target.style.background = 'rgba(124, 92, 252, 0.18)';
+    target.style.borderRadius = '8px';
+    setTimeout(() => {
+      target.style.transition = 'background 1.2s ease';
+      target.style.background = '';
+      setTimeout(() => {
+        target.style.transition = '';
+        target.style.borderRadius = '';
+      }, 1300);
+    }, 400);
+  }, 50);
+}
+
+function handleSearchKey(e) {
+  const items = document.querySelectorAll('.search-result-item');
+  if (!items.length) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    searchSelectedIdx = Math.min(searchSelectedIdx + 1, items.length - 1);
+    updateSearchSelection(items);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    searchSelectedIdx = Math.max(searchSelectedIdx - 1, 0);
+    updateSearchSelection(items);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    const selected = items[searchSelectedIdx] || items[0];
+    if (selected) jumpToResult(selected);
+  } else if (e.key === 'Escape') {
+    closeSearch();
+  }
+}
+
+function updateSearchSelection(items) {
+  items.forEach((item, i) => {
+    item.classList.toggle('selected', i === searchSelectedIdx);
+  });
+  if (searchSelectedIdx >= 0) {
+    items[searchSelectedIdx].scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function openSearch() {
+  const overlay = document.getElementById('searchOverlay');
+  overlay.classList.add('open');
+  const input = document.getElementById('searchInput');
+  input.value = '';
+  document.getElementById('searchResults').innerHTML = '<div class="search-empty">Type to search across all 13 modules</div>';
+  searchSelectedIdx = -1;
+  setTimeout(() => input.focus(), 50);
+}
+
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('open');
+}
+
+// Global keyboard shortcut: Cmd/Ctrl+K
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    const overlay = document.getElementById('searchOverlay');
+    if (overlay.classList.contains('open')) closeSearch();
+    else openSearch();
+  }
+  if (e.key === 'Escape' && document.getElementById('searchOverlay').classList.contains('open')) {
+    closeSearch();
+  }
+});
+
 // ========== Init ==========
 window.addEventListener('DOMContentLoaded', () => {
   updateColorDemo();
@@ -6447,6 +6934,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('themeTokenDisplay').textContent = themes.dark.tokens;
   // Initialize button state demo
   setButtonState('default', document.querySelector('.state-trigger.active'));
+  // Build search index after all content is rendered
+  buildSearchIndex();
 });
 </script>
 </body>
