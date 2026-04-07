@@ -155,19 +155,19 @@ body {
   gap: 8px;
   background: rgba(124, 92, 252, 0.1);
   border: 1px solid rgba(124, 92, 252, 0.3);
-  padding: 6px 16px;
+  padding: 5px 14px;
   border-radius: 100px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--accent-light);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .hero h1 {
-  font-size: clamp(40px, 6vw, 72px);
+  font-size: clamp(38px, 5.5vw, 68px);
   font-weight: 900;
   letter-spacing: -2px;
   line-height: 1.05;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .hero h1 .gradient {
   background: linear-gradient(135deg, var(--accent-light), var(--pink), var(--orange));
@@ -176,11 +176,11 @@ body {
   -webkit-text-fill-color: transparent;
 }
 .hero p {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-secondary);
-  max-width: 560px;
-  margin: 0 auto 40px;
-  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 32px;
+  line-height: 1.65;
 }
 .hero-cta {
   display: inline-flex;
@@ -201,6 +201,54 @@ body {
   background: var(--accent-light);
   box-shadow: var(--shadow-glow);
   transform: translateY(-2px);
+}
+.hero-arc {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto 36px;
+  max-width: 720px;
+  flex-wrap: wrap;
+  row-gap: 20px;
+}
+.hero-arc-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 140px;
+}
+.hero-arc-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.hero-arc-topics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.hero-arc-topics span {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+.hero-arc-divider {
+  color: var(--border-light);
+  font-size: 18px;
+  padding: 0 4px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding-top: 26px;
 }
 
 /* ========================================
@@ -1967,6 +2015,9 @@ footer {
   .module-section { padding: 60px 20px; }
   .lesson-grid { grid-template-columns: 1fr; }
   .demo-container { padding: 24px; }
+  .hero-arc { gap: 12px; }
+  .hero-arc-divider { display: none; }
+  .hero-arc-phase { min-width: 120px; }
 }
 
 /* ========================================
@@ -2798,10 +2849,41 @@ footer {
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="hero-content">
-    <div class="hero-badge">✦ Interactive Course — Inspired by Mariana Castiho</div>
-    <h1>From Figma to<br><span class="gradient">Pixel-Perfect Code</span></h1>
-    <p>Master high-fidelity UI engineering. Learn design techniques, translate Figma designs into HTML &amp; CSS, and apply advanced styling — all hands-on and interactive.</p>
-    <span class="hero-cta" onclick="document.getElementById('module1').scrollIntoView({behavior:'smooth'});" style="cursor:pointer;">Start Learning ↓</span>
+    <div class="hero-badge">✦ 16 Modules &nbsp;·&nbsp; Fully Interactive &nbsp;·&nbsp; From First Principles</div>
+    <h1>The craft between<br><span class="gradient">design and engineering.</span></h1>
+    <p>Learn to see like a designer and build like an engineer. 16 modules that teach UI as a single discipline from visual fundamentals to production-grade front-end, from first principles.</p>
+
+    <div class="hero-arc" aria-label="Course arc">
+      <div class="hero-arc-phase">
+        <div class="hero-arc-label" style="color: var(--accent-light);">Design Eye</div>
+        <div class="hero-arc-topics">
+          <span>Color &amp; Type</span><span>Visual Depth</span><span>Design Tokens</span><span>Laws of UX</span>
+        </div>
+      </div>
+      <div class="hero-arc-divider">→</div>
+      <div class="hero-arc-phase">
+        <div class="hero-arc-label" style="color: var(--blue);">Build Craft</div>
+        <div class="hero-arc-topics">
+          <span>HTML &amp; CSS</span><span>Layouts</span><span>Components</span><span>Forms &amp; JS</span>
+        </div>
+      </div>
+      <div class="hero-arc-divider">→</div>
+      <div class="hero-arc-phase">
+        <div class="hero-arc-label" style="color: var(--green);">Ship Quality</div>
+        <div class="hero-arc-topics">
+          <span>Accessibility</span><span>Performance</span><span>Shipping</span>
+        </div>
+      </div>
+      <div class="hero-arc-divider">→</div>
+      <div class="hero-arc-phase">
+        <div class="hero-arc-label" style="color: var(--orange);">Think in Systems</div>
+        <div class="hero-arc-topics">
+          <span>Animation</span><span>Motion &amp; SVG</span><span>Data Viz</span><span>Architecture</span>
+        </div>
+      </div>
+    </div>
+
+    <span class="hero-cta" onclick="document.getElementById('module1').scrollIntoView({behavior:'smooth'});" style="cursor:pointer;">Start the Course ↓</span>
   </div>
 </section>
 
