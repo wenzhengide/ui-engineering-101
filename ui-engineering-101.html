@@ -1970,6 +1970,595 @@ footer {
 }
 
 /* ========================================
+   MODULE 14: MOTION SYSTEMS
+   ======================================== */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.motion-card {
+  background: white;
+  color: #1a1a2e;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transform: translateY(18px) scale(0.98);
+  opacity: 0;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 280ms ease;
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.motion-grid.is-visible .motion-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.motion-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(124,92,252,0.12);
+  color: #7c5cfc;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.motion-btn, .launch-btn {
+  border: 0;
+  background: #7c5cfc;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.motion-svg {
+  display: grid;
+  place-items: center;
+  padding: 24px 0 0;
+}
+.motion-flow-diagram {
+  width: 100%;
+  max-width: 420px;
+}
+.flow-diagram {
+  width: 100%;
+  max-width: 480px;
+}
+.toggle-btn, .launch-btn {
+  border: 0;
+  background: #7c5cfc;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.panel {
+  background: white;
+  color: #171723;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.panel h3,
+.panel h4,
+.panel strong {
+  color: #171723;
+}
+.panel p {
+  color: #666;
+}
+.panel-hero {
+  grid-column: 1 / -1;
+  transform: translateY(12px);
+  opacity: 0;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 280ms ease;
+}
+.stat {
+  transform: translateY(22px) scale(0.98);
+  opacity: 0;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 280ms ease;
+  transition-delay: calc(var(--i) * 70ms + 90ms);
+}
+.dashboard.is-visible .panel-hero,
+.dashboard.is-visible .stat {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+@media (max-width: 760px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+.motion-node {
+  fill: #7c5cfc;
+  transform-origin: center;
+  animation: pulseMotionNode 1.8s ease-in-out infinite;
+}
+.motion-node:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+.motion-node:nth-of-type(3) {
+  animation-delay: 0.4s;
+}
+.motion-path {
+  fill: none;
+  stroke: #60a5fa;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: drawMotionLine 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.motion-path:nth-of-type(2) {
+  animation-delay: 0.25s;
+}
+.flow-diagram .node {
+  transform-origin: center;
+  animation: pulseMotionNode 1.8s ease-in-out infinite;
+}
+.flow-diagram .node:nth-of-type(2) {
+  animation-delay: 0.16s;
+}
+.flow-diagram .node:nth-of-type(3) {
+  animation-delay: 0.32s;
+}
+.flow-diagram .path {
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
+  animation: drawMotionLine 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.flow-diagram .path:nth-of-type(2) {
+  animation-delay: 0.18s;
+}
+.motion-bars {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  height: 220px;
+}
+.bar {
+  width: 64px;
+  height: calc(var(--value) * 2px);
+  background: linear-gradient(180deg, #60a5fa, #7c5cfc);
+  border-radius: 14px 14px 0 0;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  font-weight: 700;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes drawMotionLine {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pulseMotionNode {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+@media (max-width: 720px) {
+  .motion-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-card,
+  .panel-hero,
+  .stat {
+    transform: none;
+    transition: opacity 160ms ease;
+  }
+  .motion-node, .motion-path, .node, .path {
+    animation: none;
+  }
+  .motion-path,
+  .path {
+    stroke-dashoffset: 0;
+  }
+}
+
+.timeline-beats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.timeline-beat {
+  min-width: 140px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.timeline-beat.active {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+.timeline-readout {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+.state-stage {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(124, 92, 252, 0.08), rgba(96, 165, 250, 0.03));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+}
+.state-flow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.state-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+.state-list,
+.state-detail {
+  position: relative;
+  z-index: 1;
+}
+.state-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.state-row,
+.state-detail-card {
+  background: rgba(255,255,255,0.96);
+  color: #171723;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.state-row {
+  padding: 14px 16px;
+  border: 2px solid transparent;
+  transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.state-row.active {
+  border-color: #7c5cfc;
+  transform: translateX(6px);
+}
+.state-detail-card {
+  min-height: 240px;
+  padding: 22px;
+}
+.state-detail-panel {
+  display: none;
+  animation: fadeStatePanel 260ms ease;
+}
+.state-detail-panel.active {
+  display: block;
+}
+.motion-exercise-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.motion-exercise-answer {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ---- Module 14: split demo layout ---- */
+.m14-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+.m14-preview {
+  padding: 24px 20px;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: 1px solid var(--border);
+}
+.m14-code {
+  background: #0d0d16;
+  overflow: auto;
+}
+.m14-code pre {
+  margin: 0;
+  padding: 22px 18px;
+  font-size: 11.5px;
+  line-height: 1.8;
+  color: #c9d1d9;
+  white-space: pre;
+}
+@media (max-width: 760px) {
+  .m14-split { grid-template-columns: 1fr; }
+  .m14-preview { border-right: none; border-bottom: 1px solid var(--border); }
+}
+
+/* Stagger card demo */
+.m14-stagger-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 13px 15px;
+  opacity: 0;
+  transform: translateY(12px);
+}
+#staggerPreview.is-playing .m14-stagger-card {
+  animation: m14CardEnter 420ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 70ms) both;
+}
+@keyframes m14CardEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.m14-card-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(124,92,252,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.m14-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.m14-card-sub   { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Easing comparison demo */
+.m14-ease-track {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.m14-ease-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  width: 78px;
+  flex-shrink: 0;
+}
+.m14-ease-rail {
+  flex: 1;
+  height: 34px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  position: relative;
+  overflow: visible;
+}
+.m14-ease-ball {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: left 600ms var(--ease-fn, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.m14-ease-rail.is-moved .m14-ease-ball {
+  left: calc(100% - 27px);
+}
+
+/* State transition demo */
+.m14-state-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  background: var(--bg-primary);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: border-color 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text-primary);
+  width: 100%;
+}
+.m14-state-btn.active {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+.m14-state-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.m14-detail-panel { display: none; }
+.m14-detail-panel.is-active {
+  display: block;
+  animation: m14DetailIn 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes m14DetailIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* SVG path draw demo */
+.m14-svg-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: var(--path-len, 200);
+  stroke-dashoffset: var(--path-len, 200);
+  transition: stroke-dashoffset 550ms cubic-bezier(0.16, 1, 0.3, 1) var(--path-delay, 0ms);
+}
+.m14-svg-node {
+  opacity: 0;
+  transition: opacity 280ms ease var(--node-delay, 0ms);
+}
+#svgDrawSvg.is-drawn .m14-svg-path { stroke-dashoffset: 0; }
+#svgDrawSvg.is-drawn .m14-svg-node { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .m14-stagger-card,
+  #staggerPreview.is-playing .m14-stagger-card { animation: none; opacity: 1; transform: none; }
+  .m14-ease-ball { transition: none; }
+  .m14-detail-panel.is-active { animation: none; }
+  .m14-svg-path, .m14-svg-node { transition: none; opacity: 1; stroke-dashoffset: 0; }
+}
+.viz-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.viz-chip {
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.viz-chip.active,
+.viz-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--accent);
+  background: rgba(124, 92, 252, 0.12);
+}
+.viz-chart {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  min-height: 280px;
+  padding: 24px 18px 12px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+  border: 1px solid var(--border);
+}
+.viz-bar-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms ease;
+}
+.viz-bar-card.is-muted {
+  opacity: 0.18;
+  transform: scale(0.96);
+}
+.viz-bar-shape {
+  width: 100%;
+  max-width: 94px;
+  height: var(--bar-height, 120px);
+  min-height: 36px;
+  border-radius: 18px 18px 8px 8px;
+  background: linear-gradient(180deg, var(--bar-top, #60a5fa), var(--bar-bottom, #7c5cfc));
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  transition: height 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.viz-bar-meta {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.canvas-panel {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: radial-gradient(circle at top, rgba(96, 165, 250, 0.16), rgba(10, 10, 15, 0.9));
+}
+.canvas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.canvas-note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.canvas-note-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+}
+@keyframes fadeStatePanel {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes motionBudgetPulse {
+  from { transform: scale(0.85); opacity: 0.6; }
+  to { transform: scale(1.1); opacity: 1; }
+}
+@media (max-width: 760px) {
+  .state-shell {
+    grid-template-columns: 1fr;
+  }
+  .viz-chart {
+    gap: 10px;
+    min-height: 240px;
+    padding-inline: 10px;
+  }
+  .viz-bar-shape {
+    max-width: 72px;
+  }
+}
+
+/* ========================================
    SEARCH
    ======================================== */
 .search-btn {
@@ -2169,6 +2758,9 @@ footer {
     <li><span data-target="module11">Performance</span></li>
     <li><span data-target="module12">Shipping</span></li>
     <li><span data-target="module13">Animation</span></li>
+    <li><span data-target="module14">Motion Systems & SVG</span></li>
+    <li><span data-target="module15">Data Viz & Motion</span></li>
+    <li><span data-target="module16">Architecture & Tradeoffs</span></li>
   </ul>
   <button type="button" class="search-btn" onclick="openSearch()" aria-label="Search course content">
     <span>&#128269;</span> Search <kbd>⌘K</kbd>
@@ -2192,7 +2784,7 @@ footer {
       <button type="button" class="search-close-btn" onclick="closeSearch()" aria-label="Close search">&#10005;</button>
     </div>
     <div class="search-results" id="searchResults">
-      <div class="search-empty">Type to search across all 13 modules</div>
+      <div class="search-empty">Type to search across all 16 modules</div>
     </div>
     <div class="search-footer">
       <span><kbd>↑↓</kbd> navigate</span>
@@ -5978,6 +6570,1189 @@ h3 { font-size: 14px; color: #666; margin: 20px 0 12px; }
   </div>
 </section>
 
+<section class="module-section" id="module14">
+  <div class="module-header">
+    <div class="module-number">Module 14</div>
+    <h2 class="module-title">Motion Systems & SVG for Interfaces</h2>
+    <p class="module-desc">Move beyond isolated hover effects. Learn how to choreograph interface parts across time, use hierarchy and timelines to guide attention, and use SVG to explain connected UI states, flows, and diagrams.</p>
+  </div>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); margin-bottom: 8px;">Chapter 1</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Choreography, Hierarchy &amp; Timelines</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Motion systems are about deciding what leads, what follows, and what stays calm. Choreography gives order to change, hierarchy tells the eye where to look first, and timeline thinking turns separate transitions into one readable event.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">✨ Live — Staggered Card Entrance</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Each card has a CSS custom property <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;font-size:12px;">--i</code> that multiplies the stagger delay. Toggling one class on the container triggers all cards in sequence — no JavaScript timers needed.</p>
+    <button type="button" class="toggle-btn" onclick="replayStaggerDemo()">↺ Replay sequence</button>
+    <div class="m14-split">
+      <div class="m14-preview" id="staggerPreview">
+        <div class="m14-stagger-card" style="--i:0">
+          <div class="m14-card-icon">📊</div>
+          <div><div class="m14-card-title">Weekly Overview</div><div class="m14-card-sub">Key trends this period</div></div>
+        </div>
+        <div class="m14-stagger-card" style="--i:1">
+          <div class="m14-card-icon">⚡</div>
+          <div><div class="m14-card-title">Response time</div><div class="m14-card-sub">avg 124ms — within SLA</div></div>
+        </div>
+        <div class="m14-stagger-card" style="--i:2">
+          <div class="m14-card-icon">✅</div>
+          <div><div class="m14-card-title">Success rate</div><div class="m14-card-sub">99.2% across all regions</div></div>
+        </div>
+        <div class="m14-stagger-card" style="--i:3">
+          <div class="m14-card-icon">🔔</div>
+          <div><div class="m14-card-title">Open alerts</div><div class="m14-card-sub">2 pending review</div></div>
+        </div>
+      </div>
+      <div class="m14-code">
+        <pre><span class="highlight-comment">/* 1. Cards start invisible */</span>
+<span class="highlight-css">.m14-stagger-card</span> {
+  <span class="highlight-prop">opacity:</span>   <span class="highlight-val">0</span>;
+  <span class="highlight-prop">transform:</span> <span class="highlight-val">translateY(12px)</span>;
+}
+
+<span class="highlight-comment">/* 2. One class triggers the whole sequence */</span>
+<span class="highlight-css">#staggerPreview.is-playing .m14-stagger-card</span> {
+  <span class="highlight-prop">animation:</span> <span class="highlight-val">cardEnter 420ms
+    cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--i) * 70ms)
+    both</span>;
+}
+
+<span class="highlight-comment">/* 3. The keyframe */</span>
+<span class="highlight-css">@keyframes cardEnter</span> {
+  <span class="highlight-css">from</span> {
+    <span class="highlight-prop">opacity:</span>   <span class="highlight-val">0</span>;
+    <span class="highlight-prop">transform:</span> <span class="highlight-val">translateY(12px)</span>;
+  }
+}
+
+<span class="highlight-comment">/* HTML — index on each element: */</span>
+<span class="highlight-comment">/* &lt;div class="card" style="--i:0"&gt; */</span>
+<span class="highlight-comment">/* &lt;div class="card" style="--i:1"&gt; */</span>
+<span class="highlight-comment">/* &lt;div class="card" style="--i:2"&gt; */</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Motion System Basics</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 220px;">
+          <p style="font-weight: 700; margin-bottom: 10px;">Microinteraction</p>
+          <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+            <li>one element</li>
+            <li>one immediate response</li>
+            <li>good for local feedback</li>
+            <li>example: button press or toggle switch</li>
+          </ul>
+        </div>
+        <div style="flex: 1; min-width: 220px;">
+          <p style="font-weight: 700; margin-bottom: 10px;">Motion system</p>
+          <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+            <li>multiple elements</li>
+            <li>coordinated beats over time</li>
+            <li>good for orientation and hierarchy</li>
+            <li>example: panel opens, chart updates, labels settle</li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="highlight-comment">/* System motion tokens */</span>
+<span class="highlight-css">:root</span> {
+  <span class="highlight-prop">--ease-standard:</span>      <span class="highlight-val">cubic-bezier(0.16, 1, 0.3, 1)</span>;
+  <span class="highlight-prop">--ease-decelerate:</span>    <span class="highlight-val">cubic-bezier(0, 0, 0.2, 1)</span>;
+  <span class="highlight-prop">--ease-accelerate:</span>    <span class="highlight-val">cubic-bezier(0.4, 0, 1, 1)</span>;
+  <span class="highlight-prop">--ease-bounce-soft:</span>   <span class="highlight-val">cubic-bezier(0.34, 1.56, 0.64, 1)</span>;
+  <span class="highlight-prop">--dur-fast:</span>           <span class="highlight-val">160ms</span>;
+  <span class="highlight-prop">--dur-medium:</span>         <span class="highlight-val">280ms</span>;
+  <span class="highlight-prop">--dur-slow:</span>           <span class="highlight-val">420ms</span>;
+  <span class="highlight-prop">--stagger-base:</span>       <span class="highlight-val">60ms</span>;
+}</pre>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-top: 16px;">Ask four questions before you animate:</p>
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>what is the main thing to notice?</li>
+        <li>what can move together?</li>
+        <li>what should lag behind by one beat?</li>
+        <li>what should stay still to preserve contrast?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Sequencing Rules</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ol style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>container or frame appears first</li>
+        <li>hero content or key state change follows</li>
+        <li>supporting cards or details come after</li>
+        <li>metadata and labels arrive last</li>
+      </ol>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-top: 12px;">Rules of thumb:</p>
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>keep most sequences under 600ms total</li>
+        <li>use 40ms to 80ms stagger steps for interface content</li>
+        <li>reserve bounce or flourish for one focal element, not every element</li>
+        <li>make exits simpler and faster than entrances</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🏃 Live — Easing Curves Side by Side</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Same distance. Same duration. Completely different feel. Click <strong style="color:var(--text-primary);">Play all</strong> to send the balls at once and feel how each cubic-bezier curve shapes momentum.</p>
+    <button type="button" class="toggle-btn" onclick="playEasingDemo()">▶ Play all</button>
+    <div class="m14-split">
+      <div class="m14-preview" id="easingPreview" style="gap: 18px; justify-content: center;">
+        <div class="m14-ease-track">
+          <div class="m14-ease-label">Standard</div>
+          <div class="m14-ease-rail" id="ease0">
+            <div class="m14-ease-ball" style="--ease-fn: cubic-bezier(0.16, 1, 0.3, 1); background: #7c5cfc;"></div>
+          </div>
+        </div>
+        <div class="m14-ease-track">
+          <div class="m14-ease-label">Decelerate</div>
+          <div class="m14-ease-rail" id="ease1">
+            <div class="m14-ease-ball" style="--ease-fn: cubic-bezier(0, 0, 0.2, 1); background: #60a5fa;"></div>
+          </div>
+        </div>
+        <div class="m14-ease-track">
+          <div class="m14-ease-label">Accelerate</div>
+          <div class="m14-ease-rail" id="ease2">
+            <div class="m14-ease-ball" style="--ease-fn: cubic-bezier(0.4, 0, 1, 1); background: #f472b6;"></div>
+          </div>
+        </div>
+        <div class="m14-ease-track">
+          <div class="m14-ease-label">Bounce</div>
+          <div class="m14-ease-rail" id="ease3">
+            <div class="m14-ease-ball" style="--ease-fn: cubic-bezier(0.34, 1.56, 0.64, 1); background: #34d399;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="m14-code">
+        <pre><span class="highlight-comment">/* Motion tokens — define once, reuse everywhere */</span>
+<span class="highlight-css">:root</span> {
+  <span class="highlight-comment">/* crisp entry, slight overshoot — default */</span>
+  <span class="highlight-prop">--ease-standard:</span>
+    <span class="highlight-val">cubic-bezier(0.16, 1, 0.3, 1)</span>;
+
+  <span class="highlight-comment">/* starts fast, lands soft — arrivals */</span>
+  <span class="highlight-prop">--ease-decelerate:</span>
+    <span class="highlight-val">cubic-bezier(0, 0, 0.2, 1)</span>;
+
+  <span class="highlight-comment">/* starts slow, exits fast — dismissals */</span>
+  <span class="highlight-prop">--ease-accelerate:</span>
+    <span class="highlight-val">cubic-bezier(0.4, 0, 1, 1)</span>;
+
+  <span class="highlight-comment">/* overshoots target — one focal element */</span>
+  <span class="highlight-prop">--ease-bounce:</span>
+    <span class="highlight-val">cubic-bezier(0.34, 1.56, 0.64, 1)</span>;
+}
+
+<span class="highlight-comment">/* Usage — swap the token, keep the rest */</span>
+<span class="highlight-css">.card</span> {
+  <span class="highlight-prop">transition:</span>
+    <span class="highlight-val">transform 600ms var(--ease-standard)</span>;
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blue); margin-bottom: 8px;">Chapter 2</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">SVG Flows, Diagrams &amp; Connected UI States</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">SVG shines when the interface needs to show relationship: how data moves, how one state connects to another, or how elements belong together in space.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🔄 Live — Master → Detail State Transition</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Click a row. The detail panel feels like the same object expanding into a richer state — not a screen swap. A single CSS animation + a toggled class does all the work.</p>
+    <div class="m14-split">
+      <div class="m14-preview" style="gap: 0; padding: 0;">
+        <div style="padding: 18px 16px; display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--border);">
+          <button type="button" class="m14-state-btn active" data-m14-key="deploy" onclick="showM14State('deploy', this)">
+            <span class="m14-state-dot" style="background:#7c5cfc;"></span>
+            <span>
+              <strong style="font-size: 13px; display:block;">Deployments</strong>
+              <span style="font-size: 12px; color: var(--text-secondary);">3 active pipelines</span>
+            </span>
+          </button>
+          <button type="button" class="m14-state-btn" data-m14-key="alerts" onclick="showM14State('alerts', this)">
+            <span class="m14-state-dot" style="background:#f472b6;"></span>
+            <span>
+              <strong style="font-size: 13px; display:block;">Alerts</strong>
+              <span style="font-size: 12px; color: var(--text-secondary);">2 unresolved issues</span>
+            </span>
+          </button>
+          <button type="button" class="m14-state-btn" data-m14-key="users" onclick="showM14State('users', this)">
+            <span class="m14-state-dot" style="background:#34d399;"></span>
+            <span>
+              <strong style="font-size: 13px; display:block;">Users</strong>
+              <span style="font-size: 12px; color: var(--text-secondary);">1,204 active today</span>
+            </span>
+          </button>
+        </div>
+        <div style="padding: 18px 16px; min-height: 150px;">
+          <div class="m14-detail-panel is-active" data-m14-panel="deploy">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #7c5cfc; margin-bottom: 6px;">Deployments</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 10px;">3 pipelines running</div>
+            <div style="display: flex; gap: 7px; flex-wrap: wrap;">
+              <span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(124,92,252,0.14); color: #9370ff; font-weight: 600;">prod-us-east</span>
+              <span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(124,92,252,0.14); color: #9370ff; font-weight: 600;">prod-eu-west</span>
+              <span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(124,92,252,0.07); color: #7c5cfc; font-weight: 600;">staging</span>
+            </div>
+          </div>
+          <div class="m14-detail-panel" data-m14-panel="alerts">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #f472b6; margin-bottom: 6px;">Alerts</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 10px;">2 need attention</div>
+            <div style="display: flex; flex-direction: column; gap: 7px;">
+              <span style="font-size: 12px; padding: 7px 12px; border-radius: 10px; background: rgba(244,114,182,0.10); color: #f472b6; font-weight: 600;">P2 — Memory spike on worker-03</span>
+              <span style="font-size: 12px; padding: 7px 12px; border-radius: 10px; background: rgba(244,114,182,0.06); color: #e879af; font-weight: 600;">P3 — Slow query in reporting DB</span>
+            </div>
+          </div>
+          <div class="m14-detail-panel" data-m14-panel="users">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #34d399; margin-bottom: 6px;">Users</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 10px;">1,204 active today</div>
+            <div style="display: flex; gap: 18px;">
+              <div><div style="font-size: 18px; font-weight: 800; color: var(--text-primary);">847</div><div style="font-size: 12px; color: var(--text-secondary);">New sessions</div></div>
+              <div><div style="font-size: 18px; font-weight: 800; color: var(--text-primary);">3.2m</div><div style="font-size: 12px; color: var(--text-secondary);">Avg session</div></div>
+              <div><div style="font-size: 18px; font-weight: 800; color: var(--text-primary);">68%</div><div style="font-size: 12px; color: var(--text-secondary);">Return rate</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="m14-code">
+        <pre><span class="highlight-comment">/* Panels hidden by default */</span>
+<span class="highlight-css">.m14-detail-panel</span> { <span class="highlight-prop">display:</span> <span class="highlight-val">none</span>; }
+
+<span class="highlight-comment">/* Active panel slides in from the right */</span>
+<span class="highlight-css">.m14-detail-panel.is-active</span> {
+  <span class="highlight-prop">display:</span> <span class="highlight-val">block</span>;
+  <span class="highlight-prop">animation:</span> <span class="highlight-val">detailIn 280ms
+    cubic-bezier(0.16, 1, 0.3, 1) both</span>;
+}
+
+<span class="highlight-css">@keyframes detailIn</span> {
+  <span class="highlight-css">from</span> {
+    <span class="highlight-prop">opacity:</span>   <span class="highlight-val">0</span>;
+    <span class="highlight-prop">transform:</span> <span class="highlight-val">translateX(10px)</span>;
+  }
+}
+
+<span class="highlight-comment">/* Row gives positional feedback */</span>
+<span class="highlight-css">.m14-state-btn.active</span> {
+  <span class="highlight-prop">border-color:</span> <span class="highlight-val">var(--accent)</span>;
+  <span class="highlight-prop">transform:</span>    <span class="highlight-val">translateX(4px)</span>;
+}
+
+<span class="highlight-comment">// JS — swap active panel on click</span>
+<span class="highlight-comment">// panels.forEach(p =&gt;</span>
+<span class="highlight-comment">//   p.classList.toggle('is-active',</span>
+<span class="highlight-comment">//     p.dataset.m14Panel === key));</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">✏️ Live — SVG Path Drawing</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">The <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;font-size:12px;">stroke-dashoffset</code> trick makes any path appear to draw itself. Set <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;font-size:12px;">stroke-dasharray</code> to the path's total length, then transition offset to zero. Click to watch the user flow draw in step by step.</p>
+    <button type="button" class="toggle-btn" onclick="replaySvgDraw()">↺ Draw flow</button>
+    <div class="m14-split">
+      <div class="m14-preview" style="align-items: center; justify-content: center; min-height: 180px;">
+        <svg id="svgDrawSvg" viewBox="0 0 360 130" style="width: 100%; max-width: 340px;" aria-label="User flow: Login to Dashboard to Profile">
+          <defs>
+            <marker id="m14Arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0.5 L0,5.5 L7,3 z" fill="#7c5cfc"/>
+            </marker>
+            <marker id="m14Arrow2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0.5 L0,5.5 L7,3 z" fill="#7c5cfc"/>
+            </marker>
+          </defs>
+          <!-- Connecting paths -->
+          <path class="m14-svg-path" d="M82 65 L172 65" stroke="#7c5cfc" stroke-width="2"
+            style="--path-len:90; --path-delay:150ms" marker-end="url(#m14Arrow)"/>
+          <path class="m14-svg-path" d="M248 65 L308 65" stroke="#7c5cfc" stroke-width="2"
+            style="--path-len:60; --path-delay:600ms" marker-end="url(#m14Arrow2)"/>
+          <!-- Nodes -->
+          <g class="m14-svg-node" style="--node-delay:0ms">
+            <rect x="8" y="46" width="74" height="38" rx="9" fill="rgba(124,92,252,0.14)" stroke="#7c5cfc" stroke-width="1.5"/>
+            <text x="45" y="68" text-anchor="middle" fill="#c9c4ff" font-size="12" font-weight="700">Login</text>
+          </g>
+          <g class="m14-svg-node" style="--node-delay:300ms">
+            <rect x="172" y="40" width="76" height="50" rx="11" fill="rgba(124,92,252,0.22)" stroke="#7c5cfc" stroke-width="2"/>
+            <text x="210" y="63" text-anchor="middle" fill="#c9c4ff" font-size="12" font-weight="700">Dashboard</text>
+            <text x="210" y="78" text-anchor="middle" fill="#9ca3cc" font-size="9">main view</text>
+          </g>
+          <g class="m14-svg-node" style="--node-delay:750ms">
+            <rect x="308" y="46" width="46" height="38" rx="9" fill="rgba(124,92,252,0.10)" stroke="#7c5cfc" stroke-width="1.5"/>
+            <text x="331" y="68" text-anchor="middle" fill="#c9c4ff" font-size="11" font-weight="700">Profile</text>
+          </g>
+        </svg>
+      </div>
+      <div class="m14-code">
+        <pre><span class="highlight-comment">/* 1. Measure path: path.getTotalLength() */</span>
+<span class="highlight-comment">/*    → set that value as --path-len      */</span>
+
+<span class="highlight-css">.m14-svg-path</span> {
+  <span class="highlight-comment">/* dasharray = full length → hides path */</span>
+  <span class="highlight-prop">stroke-dasharray:</span>  <span class="highlight-val">var(--path-len)</span>;
+  <span class="highlight-prop">stroke-dashoffset:</span> <span class="highlight-val">var(--path-len)</span>;
+
+  <span class="highlight-prop">transition:</span> <span class="highlight-val">stroke-dashoffset 550ms
+    cubic-bezier(0.16, 1, 0.3, 1)
+    var(--path-delay)</span>;
+}
+
+<span class="highlight-comment">/* One class draws every path */</span>
+<span class="highlight-css">#svgDrawSvg.is-drawn .m14-svg-path</span> {
+  <span class="highlight-prop">stroke-dashoffset:</span> <span class="highlight-val">0</span>;
+}
+
+<span class="highlight-comment">/* Nodes fade in after path arrives */</span>
+<span class="highlight-css">.m14-svg-node</span> {
+  <span class="highlight-prop">opacity:</span> <span class="highlight-val">0</span>;
+  <span class="highlight-prop">transition:</span> <span class="highlight-val">opacity 280ms ease
+    var(--node-delay)</span>;
+}
+<span class="highlight-css">#svgDrawSvg.is-drawn .m14-svg-node</span> {
+  <span class="highlight-prop">opacity:</span> <span class="highlight-val">1</span>;
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Why SVG for Interface Motion</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>SVG gives you points, paths, and shapes rather than only boxes</li>
+        <li>it is ideal for diagrams, route maps, node-link flows, and connected state transitions</li>
+        <li>you can style with CSS, target parts precisely, and keep structure inspectable</li>
+        <li>it is usually a better fit than Canvas when you are animating a few exact objects and want semantic control</li>
+      </ul>
+      <pre><span class="highlight-comment">/* Path drawing pattern */</span>
+<span class="highlight-css">.path</span> {
+  <span class="highlight-prop">stroke-dasharray:</span> <span class="highlight-val">120</span>;
+  <span class="highlight-prop">stroke-dashoffset:</span> <span class="highlight-val">120</span>;
+  <span class="highlight-prop">animation:</span> <span class="highlight-val">draw 600ms var(--ease-standard) forwards</span>;
+}
+
+<span class="highlight-css">@keyframes draw</span> {
+  <span class="highlight-val">to</span> { <span class="highlight-prop">stroke-dashoffset:</span> <span class="highlight-val">0</span>; }
+}</pre>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Parent–Child Motion Patterns</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <p style="font-size: 14px; color: var(--text-secondary);">Good motion systems create a clear dependency chain:</p>
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>parent establishes space</li>
+        <li>child content fills that space</li>
+        <li>labels and metadata settle last</li>
+        <li>diagram frame appears before lines draw</li>
+        <li>source object stays recognizable while destination expands</li>
+      </ul>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-top: 12px;">Avoid letting every child animate with a different logic. Coherence matters more than novelty.</p>
+    </div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">✏️ Exercises — Critique the Motion</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 18px;">Open each prompt, decide what is wrong with the choreography, then reveal the teaching note.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Exercise 1</div>
+        <div style="font-size: 14px; line-height: 1.6;">A modal's form fields fade in before the modal container has finished appearing.</div>
+        <button type="button" class="viz-chip" style="margin-top: 14px;" onclick="toggleExerciseAnswer(this)">Reveal answer</button>
+        <div class="motion-exercise-answer">The child is moving before the parent establishes space. Reverse the sequence: shell first, key heading second, fields after.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Exercise 2</div>
+        <div style="font-size: 14px; line-height: 1.6;">A dashboard loads with seven cards, each using a different easing curve and bounce amount.</div>
+        <button type="button" class="viz-chip" style="margin-top: 14px;" onclick="toggleExerciseAnswer(this)">Reveal answer</button>
+        <div class="motion-exercise-answer">The hierarchy becomes noisy because the system loses consistency. Most elements should share one easing token; special motion belongs to one focal action only.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Exercise 3</div>
+        <div style="font-size: 14px; line-height: 1.6;">An SVG onboarding diagram redraws itself every time the user tabs through a form field.</div>
+        <button type="button" class="viz-chip" style="margin-top: 14px;" onclick="toggleExerciseAnswer(this)">Reveal answer</button>
+        <div class="motion-exercise-answer">The motion is too expensive for the importance of the event. Keep explanatory SVG motion tied to meaningful state changes, not routine focus changes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Motion Critique Checklist</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>does the sequence help orientation?</li>
+        <li>is the first beat the most important beat?</li>
+        <li>does the SVG explain structure rather than decorate it?</li>
+        <li>do connected states feel like the same object continuing?</li>
+        <li>does reduced motion preserve meaning without redrawing everything?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3>✅ Module 14 Checklist</h3>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Use choreography to decide what moves first, second, and last</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Create hierarchy through sequencing instead of animating everything equally</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Plan motion in beats on a timeline, not as isolated one-off effects</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Use SVG for flows, diagrams, and connected UI states</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Animate paths and nodes to explain structure and change</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Critique motion systems for clarity, continuity, and restraint</span></div>
+  </div>
+</section>
+
+<section class="module-section" id="module15">
+  <div class="module-header">
+    <div class="module-number">Module 15</div>
+    <h2 class="module-title">Data Visualisation &amp; Expressive Motion on the Web</h2>
+    <p class="module-desc">Learn how motion helps charts update, how filtering and sorting can stay readable, how a Processing mindset influences web experiments, and when p5.js, Canvas, and generative motion belong in interface design.</p>
+  </div>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); margin-bottom: 8px;">Chapter 1</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Chart Transitions, Filtering &amp; Sorting</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">In data visualisation, motion should preserve mental models. The user should understand that the same bars are being resorted, filtered, or updated, not replaced with unrelated shapes.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">📊 Interactive — Animated Chart Transitions</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Try a filter or sort. The bars keep their identity while their emphasis, order, and height change. This is the core of readable chart motion.</p>
+    <div class="viz-toolbar" id="vizFilterToolbar">
+      <button type="button" class="viz-chip active" data-viz-filter onclick="filterVizBars('all', this)">All</button>
+      <button type="button" class="viz-chip" data-viz-filter onclick="filterVizBars('product', this)">Product</button>
+      <button type="button" class="viz-chip" data-viz-filter onclick="filterVizBars('ops', this)">Ops</button>
+      <button type="button" class="viz-chip" data-viz-filter onclick="filterVizBars('growth', this)">Growth</button>
+      <button type="button" class="viz-chip" onclick="sortVizBars('desc')">Sort high → low</button>
+      <button type="button" class="viz-chip" onclick="sortVizBars('asc')">Sort low → high</button>
+      <button type="button" class="viz-chip" onclick="sortVizBars('reset')">Original order</button>
+    </div>
+    <div class="viz-chart" id="vizBars">
+      <div class="viz-bar-card" data-category="product" data-value="72" data-index="0">
+        <div class="viz-bar-shape" style="--bar-height: 172px; --bar-top: #93c5fd; --bar-bottom: #3b82f6;">72</div>
+        <div class="viz-bar-meta"><strong style="display:block; color: var(--text-primary);">Search</strong>Product</div>
+      </div>
+      <div class="viz-bar-card" data-category="ops" data-value="48" data-index="1">
+        <div class="viz-bar-shape" style="--bar-height: 128px; --bar-top: #67e8f9; --bar-bottom: #0891b2;">48</div>
+        <div class="viz-bar-meta"><strong style="display:block; color: var(--text-primary);">Infra</strong>Ops</div>
+      </div>
+      <div class="viz-bar-card" data-category="growth" data-value="64" data-index="2">
+        <div class="viz-bar-shape" style="--bar-height: 156px; --bar-top: #f9a8d4; --bar-bottom: #db2777;">64</div>
+        <div class="viz-bar-meta"><strong style="display:block; color: var(--text-primary);">Campaign</strong>Growth</div>
+      </div>
+      <div class="viz-bar-card" data-category="product" data-value="58" data-index="3">
+        <div class="viz-bar-shape" style="--bar-height: 144px; --bar-top: #c4b5fd; --bar-bottom: #7c3aed;">58</div>
+        <div class="viz-bar-meta"><strong style="display:block; color: var(--text-primary);">Checkout</strong>Product</div>
+      </div>
+      <div class="viz-bar-card" data-category="ops" data-value="81" data-index="4">
+        <div class="viz-bar-shape" style="--bar-height: 188px; --bar-top: #86efac; --bar-bottom: #16a34a;">81</div>
+        <div class="viz-bar-meta"><strong style="display:block; color: var(--text-primary);">Tickets</strong>Ops</div>
+      </div>
+      <div class="viz-bar-card" data-category="growth" data-value="39" data-index="5">
+        <div class="viz-bar-shape" style="--bar-height: 112px; --bar-top: #fdba74; --bar-bottom: #ea580c;">39</div>
+        <div class="viz-bar-meta"><strong style="display:block; color: var(--text-primary);">Signup</strong>Growth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Chart Transition Rules</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>preserve object constancy: the user should recognize the same bar, dot, or line after change</li>
+        <li>animate position and scale when data structure is stable</li>
+        <li>fade and collapse only when something is truly removed from focus</li>
+        <li>keep explanatory transitions short: usually 250ms to 500ms</li>
+        <li>label changes should not outrun the data change itself</li>
+      </ul>
+      <pre><span class="highlight-comment">/* Typical chart update */</span>
+<span class="highlight-css">.bar</span> {
+  <span class="highlight-prop">transition:</span> <span class="highlight-val">height 350ms var(--ease-standard),
+              transform 350ms var(--ease-standard),
+              opacity 180ms ease</span>;
+}</pre>
+    </div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🧪 Exercise — Is This Motion Appropriate?</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 18px;">Each prompt asks whether expressive motion helps or hurts interface understanding. Reveal the note after you decide.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Scenario A</div>
+        <div style="font-size: 14px; line-height: 1.6;">A live sales chart gently animates between yesterday and today after the user clicks a date range button.</div>
+        <button type="button" class="viz-chip" style="margin-top: 14px;" onclick="toggleExerciseAnswer(this)">Reveal note</button>
+        <div class="motion-exercise-answer">Appropriate. The motion explains a state change in the same chart and preserves context. Keep it brief and data-led.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Scenario B</div>
+        <div style="font-size: 14px; line-height: 1.6;">Every table row performs a decorative bounce whenever the user types into a filter input.</div>
+        <button type="button" class="viz-chip" style="margin-top: 14px;" onclick="toggleExerciseAnswer(this)">Reveal note</button>
+        <div class="motion-exercise-answer">Not appropriate. The event is frequent and the motion does not add understanding. Use subtle position or opacity updates instead.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Scenario C</div>
+        <div style="font-size: 14px; line-height: 1.6;">A portfolio landing page uses generative motion in the hero to establish a creative tone before the user scrolls into the product work.</div>
+        <button type="button" class="viz-chip" style="margin-top: 14px;" onclick="toggleExerciseAnswer(this)">Reveal note</button>
+        <div class="motion-exercise-answer">Potentially appropriate. Expressive motion can work in branding, storytelling, campaigns, and portfolios when it does not obstruct core tasks or accessibility.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--green); margin-bottom: 8px;">Chapter 2</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Processing Mindset, p5.js &amp; Generative Motion</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">A Processing mindset means thinking in systems: rules, repetition, variables, and emergent behavior. On the web, Canvas and p5.js are great when motion is not about animating a few DOM elements, but about drawing many evolving forms over time.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🎨 Interactive — Generative Motion Canvas</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">This Canvas sketch uses a simple system: particles orbit, drift, connect, and respond to parameters. It is intentionally more expressive than standard UI motion, which makes it useful for storytelling and atmosphere rather than routine controls.</p>
+    <div class="canvas-panel">
+      <div class="canvas-toolbar">
+        <button type="button" class="viz-chip" id="canvasToggleBtn" onclick="toggleCanvasMotion()">Pause motion</button>
+        <button type="button" class="viz-chip" onclick="setCanvasPreset('calm')">Calm</button>
+        <button type="button" class="viz-chip" onclick="setCanvasPreset('energetic')">Energetic</button>
+        <button type="button" class="viz-chip" onclick="setCanvasPreset('dense')">Dense</button>
+      </div>
+      <canvas id="motionCanvas" width="980" height="340" style="display:block; width:100%; height:auto;"></canvas>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Processing Mindset</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <div class="canvas-note-grid">
+        <div class="canvas-note-card">
+          <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--accent-light);">Think in rules</div>
+          <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Define particles, velocity, bounds, noise, and interaction rules. The output emerges from the system.</p>
+        </div>
+        <div class="canvas-note-card">
+          <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--blue);">Think in frames</div>
+          <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Canvas and p5.js usually redraw each frame. This differs from DOM transitions, where elements interpolate between states.</p>
+        </div>
+        <div class="canvas-note-card">
+          <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--green);">Think in variation</div>
+          <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Small random offsets, seeded patterns, and parameter ranges create lively but cohesive motion.</p>
+        </div>
+      </div>
+      <pre style="margin-top: 16px;"><span class="highlight-comment">// p5.js mental model</span>
+<span class="highlight-css">function setup()</span> { <span class="highlight-prop">createCanvas</span>(800, 400); }
+<span class="highlight-css">function draw()</span> {
+  <span class="highlight-prop">background</span>(12, 12, 20, 18);
+  <span class="highlight-comment">// update particles</span>
+  <span class="highlight-comment">// draw connections</span>
+}</pre>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — When Expressive Motion Fits Interface Design</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <p style="font-size: 14px; color: var(--text-secondary);">Expressive motion is appropriate when the interface benefits from mood, storytelling, or spectacle without compromising task clarity.</p>
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>good fits: portfolio heroes, brand storytelling, campaign pages, cultural products, installation-like interfaces</li>
+        <li>careful use: onboarding moments, empty states, dashboards for occasional exploration</li>
+        <li>poor fits: dense forms, admin CRUD, high-frequency filtering, mission-critical controls</li>
+        <li>always add reduced-motion fallbacks and a way for content to remain readable without the motion layer</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">✏️ Exercise — Design Briefs</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 18px;">Use these prompts as portfolio or classroom briefs.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Brief 1</div>
+        <div style="font-size: 14px; line-height: 1.7;">Design a chart transition for switching from weekly to monthly data. Keep identity constant and describe the easing, duration, and label strategy.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Brief 2</div>
+        <div style="font-size: 14px; line-height: 1.7;">Create an SVG flow for a three-step approval process. Decide which paths draw, which nodes pulse, and what happens in reduced motion.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Brief 3</div>
+        <div style="font-size: 14px; line-height: 1.7;">Build a Canvas or p5.js hero background for a creative portfolio. Define the system rules and explain why this motion belongs in that context.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3>✅ Module 15 Checklist</h3>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Animate chart updates in a way that preserves object constancy</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Handle filtering and sorting with readable transitions instead of abrupt replacement</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Understand the Processing mindset: systems, rules, frames, and variation</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Know when Canvas or p5.js is a better fit than DOM or SVG</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Use generative motion intentionally for atmosphere, storytelling, or creative identity</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Know when expressive motion is inappropriate for core interface tasks</span></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 16: ARCHITECTURE, SYSTEMS & TRADEOFFS
+     ============================================================ -->
+<section class="module-section" id="module16">
+  <div class="module-header">
+    <div class="module-number">Module 16</div>
+    <h2 class="module-title">Architecture, Systems &amp; Tradeoffs</h2>
+    <p class="module-desc">Every UI decision is a tradeoff. Learn how to structure code, plan token and component systems, choose the right tools, and balance competing forces — abstraction vs speed, consistency vs flexibility, motion vs performance.</p>
+  </div>
+
+  <!-- ---- Chapter 1: Structuring UI Code ---- -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-light); margin-bottom: 8px;">Chapter 1</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Structuring UI Code</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">How you organize files shapes how your team navigates, scales, and collaborates. There is no single right answer — only the right answer for your team size, project scope, and toolchain.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">📁 Interactive — File Structure Patterns</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Choose a structure pattern to see the tradeoffs.</p>
+    <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+      <button type="button" class="viz-chip active" onclick="showFileStructure('single', this)">Single File</button>
+      <button type="button" class="viz-chip" onclick="showFileStructure('split', this)">Split Files</button>
+      <button type="button" class="viz-chip" onclick="showFileStructure('folders', this)">Component Folders</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+      <div id="fileTreeDisplay" style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 20px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; color: var(--text-secondary);"></div>
+      <div id="fileStructureNotes" style="font-size: 14px; line-height: 1.7; color: var(--text-secondary);"></div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Choosing a Structure</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>single file: best for demos, prototypes, learning, or tiny isolated widgets where colocating everything is faster than navigation</li>
+        <li>split files: good for medium components — separate the logic (JS), style (CSS), and template (HTML or JSX) so each file has one job</li>
+        <li>component folders: best for reusable, shared components — each folder is self-contained with its own styles, tests, stories, and index export</li>
+        <li>colocation principle: keep files that change together near each other; avoid deep nesting that forces you to jump between distant directories</li>
+        <li>never structure for hypothetical future scale — structure for the team you have and the complexity you already have</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 2: Planning a Token and Component System ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blue); margin-bottom: 8px;">Chapter 2</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Planning a Token &amp; Component System</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">A design system is not a collection of components — it is a shared language. Tokens are the vocabulary; components are the sentences. Planning both before you write code saves enormous refactoring debt later.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🗺 System Planning Layers</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">A well-planned system has three layers. Each layer depends on the one below it.</p>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="background: rgba(124,92,252,0.12); border: 1px solid rgba(124,92,252,0.3); border-radius: var(--radius-md); padding: 20px;">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-light); margin-bottom: 6px;">Layer 3 — Components &amp; Patterns</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Button, Card, Input, Modal, Toast, DataTable, NavigationBar — assembled from tokens and primitives. Each has documented variants, states, and usage rules.</div>
+        <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+          <span style="background: rgba(124,92,252,0.2); color: var(--accent-light); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-family: var(--font-mono);">Button</span>
+          <span style="background: rgba(124,92,252,0.2); color: var(--accent-light); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-family: var(--font-mono);">Input</span>
+          <span style="background: rgba(124,92,252,0.2); color: var(--accent-light); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-family: var(--font-mono);">Card</span>
+          <span style="background: rgba(124,92,252,0.2); color: var(--accent-light); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-family: var(--font-mono);">Modal</span>
+          <span style="background: rgba(124,92,252,0.2); color: var(--accent-light); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-family: var(--font-mono);">Toast</span>
+        </div>
+      </div>
+      <div style="background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.25); border-radius: var(--radius-md); padding: 20px;">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blue); margin-bottom: 6px;">Layer 2 — Semantic Tokens</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Named for their role, not their value: <code style="color: var(--blue);">--color-action-primary</code>, <code style="color: var(--blue);">--space-component-gap</code>, <code style="color: var(--blue);">--radius-interactive</code>. These are what components reference.</div>
+      </div>
+      <div style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); border-radius: var(--radius-md); padding: 20px;">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--green); margin-bottom: 6px;">Layer 1 — Primitive Tokens</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Raw values with no meaning: <code style="color: var(--green);">--color-purple-500: #7c5cfc</code>, <code style="color: var(--green);">--space-4: 16px</code>, <code style="color: var(--green);">--radius-2: 8px</code>. Never used directly in components — only aliased by Layer 2.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Planning Sequence</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>start with a primitive scale audit: what colors, spacing steps, and radii does the design actually use?</li>
+        <li>then create semantic aliases for each role — do not skip this layer; it is what makes theming possible</li>
+        <li>define component APIs before implementation: what are the props, variants, states, and composition slots?</li>
+        <li>document usage rules, not just the API — when to use this component and when not to</li>
+        <li>the token system and component API should be agreed in Figma before any code is written</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 3: HTML/CSS/JS vs React ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--green); margin-bottom: 8px;">Chapter 3</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Choosing Between HTML/CSS/JS and React</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">React solves real problems — but it introduces real costs. Understanding <em>what problem you are actually solving</em> is the only way to make this choice well.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">⚖️ Decision Matrix — When to reach for each tool</div>
+    <div style="overflow-x: auto;">
+      <table id="toolChoiceTable" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align: left; padding: 10px 14px; color: var(--text-muted); font-weight: 600;">Signal</th>
+            <th style="text-align: center; padding: 10px 14px; color: var(--green); font-weight: 600;">Plain HTML/CSS/JS</th>
+            <th style="text-align: center; padding: 10px 14px; color: var(--accent-light); font-weight: 600;">React (or equivalent)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; color: var(--text-secondary);">UI state changes driven by user input</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--text-muted);">manual DOM updates</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--accent-light);">✓ declarative state</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; color: var(--text-secondary);">Static or near-static content</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--green);">✓ zero overhead</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--text-muted);">overkill</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; color: var(--text-secondary);">Reusable components across a large app</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--text-muted);">risky duplication</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--accent-light);">✓ composable</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; color: var(--text-secondary);">Performance-critical rendering (10k+ nodes)</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--green);">✓ direct, predictable</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--text-muted);">virtual DOM overhead</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; color: var(--text-secondary);">Team already knows the ecosystem</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--green);">✓ universal knowledge</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--accent-light);">✓ if team knows React</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; color: var(--text-secondary);">SEO / content-first pages</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--green);">✓ HTML first</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--text-muted);">needs SSR/SSG</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 14px; color: var(--text-secondary);">Prototype / demo / quick experiment</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--green);">✓ fastest to start</td>
+            <td style="text-align: center; padding: 12px 14px; color: var(--text-muted);">setup cost</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — The Real Rule</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>React is a solution to the problem of keeping UI and state in sync at scale — if you don't have that problem, you don't need React</li>
+        <li>vanilla JS is not less professional; it is often more appropriate for widgets, microsites, design demos, and embedded components</li>
+        <li>web components are a third path for cross-framework reuse without a build step, but come with their own DX tradeoffs</li>
+        <li>the best engineers are fluent in both — they can prototype in plain HTML, then graduate to React when complexity justifies it</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 4: Semantic CSS vs Utility CSS ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); margin-bottom: 8px;">Chapter 4</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Semantic CSS vs Utility CSS</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Semantic CSS names classes for <em>what a thing is</em>. Utility CSS names classes for <em>what a property does</em>. Both are valid — the question is which tradeoff you are willing to live with.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">💬 Side-by-Side — Same component, two approaches</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div>
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--green); margin-bottom: 10px;">Semantic CSS (BEM-style)</div>
+        <pre style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px; font-size: 12px; overflow-x: auto; line-height: 1.7;"><span class="highlight-comment">/* button.css */</span>
+<span class="highlight-css">.btn</span> {
+  <span class="highlight-prop">display:</span> <span class="highlight-val">inline-flex</span>;
+  <span class="highlight-prop">align-items:</span> <span class="highlight-val">center</span>;
+  <span class="highlight-prop">padding:</span> <span class="highlight-val">10px 20px</span>;
+  <span class="highlight-prop">border-radius:</span> <span class="highlight-val">8px</span>;
+  <span class="highlight-prop">font-weight:</span> <span class="highlight-val">600</span>;
+}
+<span class="highlight-css">.btn--primary</span> {
+  <span class="highlight-prop">background:</span> <span class="highlight-val">var(--accent)</span>;
+  <span class="highlight-prop">color:</span> <span class="highlight-val">white</span>;
+}
+
+<span class="highlight-comment">&lt;!-- HTML --&gt;</span>
+<span class="highlight-prop">&lt;button</span> <span class="highlight-val">class</span>=<span class="highlight-css">"btn btn--primary"</span><span class="highlight-prop">&gt;</span>
+  Save
+<span class="highlight-prop">&lt;/button&gt;</span></pre>
+        <div style="margin-top: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+          <strong style="color: var(--green);">Pros:</strong> readable HTML, one source of truth per component, easy to audit<br>
+          <strong style="color: var(--red);">Cons:</strong> naming fatigue, CSS grows unbounded, context-switching between files
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blue); margin-bottom: 10px;">Utility CSS (Tailwind-style)</div>
+        <pre style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px; font-size: 12px; overflow-x: auto; line-height: 1.7;"><span class="highlight-comment">&lt;!-- No separate CSS file --&gt;</span>
+
+<span class="highlight-prop">&lt;button</span> <span class="highlight-val">class</span>=<span class="highlight-css">"inline-flex items-center
+  px-5 py-2.5 rounded-lg
+  font-semibold bg-violet-500
+  text-white hover:bg-violet-600
+  transition-colors"</span><span class="highlight-prop">&gt;</span>
+  Save
+<span class="highlight-prop">&lt;/button&gt;</span></pre>
+        <div style="margin-top: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+          <strong style="color: var(--green);">Pros:</strong> no naming, styles co-located with markup, no dead CSS, fast iteration<br>
+          <strong style="color: var(--red);">Cons:</strong> verbose HTML, harder to read at a glance, consistency requires discipline
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — How to Decide</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>utility CSS wins on speed-of-iteration and zero dead CSS — great for products where the design is still in motion</li>
+        <li>semantic CSS wins on HTML readability and when multiple people need to understand the component without reading every class</li>
+        <li>CSS Modules (used in React/Vue) offer a middle path: locally scoped semantic names without global collision risk</li>
+        <li>the real risk with utility CSS is inconsistency — without a token system behind it, teams drift to arbitrary pixel values</li>
+        <li>whichever you choose, enforce it consistently — mixing both without intention creates the worst of both worlds</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 5: SVG vs Canvas ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); margin-bottom: 8px;">Chapter 5</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">SVG vs Canvas</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Both SVG and Canvas render graphics on the web. But they have fundamentally different mental models — one is a retained-mode scene graph of DOM nodes; the other is an immediate-mode pixel buffer. Choosing wrong costs you performance or interactivity.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🎯 SVG vs Canvas — Capability Map</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div style="background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); border-radius: var(--radius-md); padding: 20px;">
+        <div style="font-size: 14px; font-weight: 700; color: var(--pink); margin-bottom: 14px;">SVG — use when</div>
+        <ul style="padding-left: 16px; color: var(--text-secondary); font-size: 13px; line-height: 1.9; list-style: disc;">
+          <li>shapes need to be clickable or hoverable</li>
+          <li>you need CSS transitions/animations on elements</li>
+          <li>the scene has &lt; ~1000 elements</li>
+          <li>accessibility matters (title, desc, aria)</li>
+          <li>you need crisp output at all zoom levels</li>
+          <li>icons, illustrations, simple charts, diagrams</li>
+        </ul>
+      </div>
+      <div style="background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.25); border-radius: var(--radius-md); padding: 20px;">
+        <div style="font-size: 14px; font-weight: 700; color: var(--orange); margin-bottom: 14px;">Canvas — use when</div>
+        <ul style="padding-left: 16px; color: var(--text-secondary); font-size: 13px; line-height: 1.9; list-style: disc;">
+          <li>rendering thousands of elements per frame</li>
+          <li>pixel-level manipulation (filters, effects)</li>
+          <li>real-time or generative animation loops</li>
+          <li>game-style rendering or simulations</li>
+          <li>WebGL / GPU-accelerated rendering (via WebGL API)</li>
+          <li>you manage hit-testing yourself</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: 16px; background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+      <strong style="color: var(--text-primary);">Rule of thumb:</strong> start with SVG. Reach for Canvas when profiling shows SVG is the bottleneck, or when you are building something that is fundamentally a drawing surface rather than a document structure.
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — SVG vs Canvas Quick Reference</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>SVG is part of the DOM — you can querySelector, addEventListener, and animate with CSS just like any HTML element</li>
+        <li>Canvas is a pixel bitmap — once drawn, pixels have no memory; hit-testing requires manual math</li>
+        <li>SVG scales infinitely with CSS; Canvas pixels blur unless you scale by devicePixelRatio manually</li>
+        <li>D3.js defaults to SVG but can target Canvas for large datasets — this is a common real-world pattern</li>
+        <li>WebGL is a third path (via Canvas) for GPU-accelerated 3D or extreme 2D performance — Three.js abstracts this</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 6: Motion vs Performance ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-light); margin-bottom: 8px;">Chapter 6</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Motion vs Performance</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Every animation has a cost. The question is not whether to animate, but how to animate without destroying frame rate, battery life, or accessibility for users who have asked for less motion.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">⚡ Performance Cost by Animation Property</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Different CSS properties trigger different parts of the rendering pipeline. Staying in the compositor thread keeps animations smooth.</p>
+    <div style="display: flex; flex-direction: column; gap: 10px;" id="perfCostBars">
+      <div class="perf-cost-row" data-cost="low">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+          <span style="font-family: var(--font-mono); font-size: 13px; color: var(--green);">opacity, transform</span>
+          <span style="font-size: 12px; color: var(--green); font-weight: 600;">Compositor only — cheapest</span>
+        </div>
+        <div style="height: 8px; background: rgba(52,211,153,0.15); border-radius: 4px;"><div style="height: 100%; width: 20%; background: var(--green); border-radius: 4px;"></div></div>
+      </div>
+      <div class="perf-cost-row" data-cost="medium">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+          <span style="font-family: var(--font-mono); font-size: 13px; color: var(--orange);">color, background-color, box-shadow</span>
+          <span style="font-size: 12px; color: var(--orange); font-weight: 600;">Paint — moderate cost</span>
+        </div>
+        <div style="height: 8px; background: rgba(251,146,60,0.15); border-radius: 4px;"><div style="height: 100%; width: 55%; background: var(--orange); border-radius: 4px;"></div></div>
+      </div>
+      <div class="perf-cost-row" data-cost="high">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+          <span style="font-family: var(--font-mono); font-size: 13px; color: var(--red);">width, height, top, left, margin, padding</span>
+          <span style="font-size: 12px; color: var(--red); font-weight: 600;">Layout — most expensive</span>
+        </div>
+        <div style="height: 8px; background: rgba(248,113,113,0.15); border-radius: 4px;"><div style="height: 100%; width: 90%; background: var(--red); border-radius: 4px;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🔢 Motion Budget — Interactive Tradeoff</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Adjust the number of simultaneous animated elements. Watch when the frame budget fills up.</p>
+    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+      <label style="font-size: 13px; color: var(--text-secondary);">Animated elements:</label>
+      <input type="range" id="motionBudgetSlider" min="1" max="200" value="20" style="flex: 1;" oninput="updateMotionBudget(this.value)">
+      <span id="motionBudgetCount" style="font-family: var(--font-mono); font-size: 14px; color: var(--accent-light); min-width: 40px;">20</span>
+    </div>
+    <div id="motionBudgetStatus" style="font-size: 13px; padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 14px;"></div>
+    <div id="motionBudgetBoxes" style="display: flex; flex-wrap: wrap; gap: 4px; min-height: 60px;"></div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Motion Performance Rules</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>stick to <code>transform</code> and <code>opacity</code> for animations — they run on the compositor thread and never trigger layout</li>
+        <li>use <code>will-change: transform</code> sparingly — it promotes the element to its own layer, which costs memory</li>
+        <li>always add <code>@media (prefers-reduced-motion: reduce)</code> — turn off or simplify all animations for users who need it</li>
+        <li>avoid animating layout properties (<code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>) — use <code>transform: scale()</code> and <code>translate()</code> instead</li>
+        <li>profile in DevTools Performance tab with CPU throttling on — your machine is not your user's machine</li>
+        <li>keep animation duration under 400ms for UI feedback; save longer durations for narrative or storytelling moments</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 7: Abstraction vs Speed ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blue); margin-bottom: 8px;">Chapter 7</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Abstraction vs Speed</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Every abstraction you create has a cost: a learning curve, an indirection to trace, a contract to maintain. The question is never "should I abstract?" but "does this abstraction pay for itself?"</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🔄 Abstraction Spectrum</div>
+    <div style="position: relative; margin: 30px 0 20px;">
+      <div style="height: 6px; background: linear-gradient(90deg, var(--green), var(--orange), var(--red)); border-radius: 3px;"></div>
+      <div style="display: flex; justify-content: space-between; margin-top: 16px;">
+        <div style="max-width: 180px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 4px;">Copy-paste</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Fast to write, slow to maintain. Fine for one-off things that will never be reused.</div>
+        </div>
+        <div style="max-width: 180px; text-align: center;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--orange); margin-bottom: 4px;">Shared component</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Right when 2-3 instances share the same intent and will change together.</div>
+        </div>
+        <div style="max-width: 180px; text-align: right;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 4px;">Framework / DSL</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Worth it only at scale. Premature frameworks become the biggest source of drag.</div>
+        </div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 24px;">
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--accent-light);">The Rule of Three</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Do it once: write it inline. Do it twice: consider a variable. Do it three times: write an abstraction. Fewer than three repetitions rarely justifies the overhead of a shared function or component.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--blue);">Wrong abstraction &gt; Duplication</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">A bad abstraction is worse than copy-paste. Duplication is visible and easy to fix. A wrong abstraction forces every future change through a leaking interface and infects everything that depends on it.</div>
+      </div>
+      <div class="motion-exercise-card">
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--green);">Defer abstraction</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Wait until you see the real shape of the problem before abstracting. Three similar but subtly different implementations reveal the true interface. Two do not.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — Abstraction Signals</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li><strong style="color: var(--green);">abstract when:</strong> the same concept appears in 3+ places and would need to change together</li>
+        <li><strong style="color: var(--green);">abstract when:</strong> the abstraction gives a meaningful name to a concept that has no obvious name in the raw code</li>
+        <li><strong style="color: var(--red);">don't abstract when:</strong> you are doing it "just in case" — YAGNI (you aren't gonna need it)</li>
+        <li><strong style="color: var(--red);">don't abstract when:</strong> the things that look similar actually have different reasons to change</li>
+        <li>the cost of an abstraction is not writing it — it is understanding it, documenting it, and evolving it for the next 18 months</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- Chapter 8: Consistency vs Flexibility ---- -->
+  <div style="margin-bottom: 48px; margin-top: 24px;">
+    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); margin-bottom: 8px;">Chapter 8</div>
+    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Consistency vs Flexibility</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">A rigid system is predictable but stifling. A totally flexible system is expressive but chaotic. The best design systems solve this by having strong defaults and deliberate escape hatches — not by giving everything an override prop.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">🧩 Component API Design — Where to draw the line</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Click each strategy to see how it handles the same customization request.</p>
+    <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+      <button type="button" class="viz-chip active" onclick="showConsistencyStrategy('rigid', this)">Too rigid</button>
+      <button type="button" class="viz-chip" onclick="showConsistencyStrategy('balanced', this)">Balanced</button>
+      <button type="button" class="viz-chip" onclick="showConsistencyStrategy('flexible', this)">Too flexible</button>
+    </div>
+    <div id="consistencyStrategyDisplay" style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 20px; font-size: 13px; line-height: 1.8;"></div>
+  </div>
+
+  <div class="demo-container">
+    <div class="demo-label">📐 Escape Hatch Patterns</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+      <div style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--accent-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Slot / children prop</div>
+        <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px;">Let consumers pass content rather than configure it through props. Composes naturally.</div>
+        <pre style="font-size: 11px; color: var(--text-secondary);"><span class="highlight-prop">&lt;Card&gt;</span>
+  <span class="highlight-css">&lt;CustomHeader /&gt;</span>
+<span class="highlight-prop">&lt;/Card&gt;</span></pre>
+      </div>
+      <div style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">className / style override</div>
+        <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px;">Accept a className prop merged onto the root element. Lowest friction for one-off tweaks.</div>
+        <pre style="font-size: 11px; color: var(--text-secondary);"><span class="highlight-prop">&lt;Button</span>
+  <span class="highlight-val">className</span>=<span class="highlight-css">"w-full"</span>
+<span class="highlight-prop">/&gt;</span></pre>
+      </div>
+      <div style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Design token override</div>
+        <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px;">Expose a small set of CSS custom properties. Theming without prop explosion.</div>
+        <pre style="font-size: 11px; color: var(--text-secondary);"><span class="highlight-css">.card</span> {
+  <span class="highlight-prop">--card-bg:</span> <span class="highlight-val">var(--bg-card)</span>;
+  <span class="highlight-prop">--card-radius:</span> <span class="highlight-val">12px</span>;
+}</pre>
+      </div>
+      <div style="background: var(--bg-editor); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Headless / renderless</div>
+        <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px;">Provide behavior and accessibility, no opinions on style. Consumer owns all visual output.</div>
+        <pre style="font-size: 11px; color: var(--text-secondary);"><span class="highlight-comment">// Radix UI, Headless UI</span>
+<span class="highlight-prop">&lt;Dialog.Root&gt;</span>
+  <span class="highlight-css">&lt;MyCustomPanel /&gt;</span>
+<span class="highlight-prop">&lt;/Dialog.Root&gt;</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-panel">
+    <div class="notes-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.notes-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+      <div class="notes-icon">📝</div>
+      <h4>Course Notes — The Goldilocks API</h4>
+      <span class="notes-toggle">▼</span>
+    </div>
+    <div class="notes-body">
+      <ul style="padding-left: 18px; color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+        <li>a component with zero escape hatches will be forked the moment someone needs to deviate — then you have two components to maintain</li>
+        <li>a component with a prop for every pixel is not a component — it is a stylesheet with extra steps</li>
+        <li>the goal: make the most common cases effortless, make unusual cases possible, make wrong usage hard</li>
+        <li>variants (e.g. <code>size="sm|md|lg"</code>) are better than numeric props (e.g. <code>padding={12}</code>) — they constrain to your system's scale</li>
+        <li>start strict and loosen only when real product needs arise — it is much harder to tighten a loose API than to open a strict one</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3>✅ Module 16 Checklist</h3>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Know when to use a single file, split files, or component folders — and why each fits a different scale</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Plan a token system with primitive and semantic layers before writing component code</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Choose plain HTML/CSS/JS vs React based on the actual problem, not habit</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Understand the tradeoffs of semantic CSS vs utility CSS and apply one consistently</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Pick SVG for interactive/accessible graphics and Canvas for pixel-intensive or generative rendering</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Animate only compositor-friendly properties and always provide a reduced-motion fallback</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Apply the Rule of Three — wait for three real use cases before abstracting</span></div>
+    <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div><span class="check-text">Design component APIs with strong defaults and deliberate, minimal escape hatches</span></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
 <!-- ============ FOOTER ============ -->
 <footer>
   <p>UI Engineering 101 — Inspired by Mariana Castiho &amp; Emil Kowalski</p>
@@ -6649,6 +8424,222 @@ function playMotionList() {
   });
 }
 
+function toggleMotionGrid() {
+  const grid = document.getElementById('motionGrid');
+  const btn = document.getElementById('motionToggleBtn');
+  const visible = grid.classList.toggle('is-visible');
+  btn.textContent = visible ? 'Hide reveal' : 'Show reveal';
+}
+
+function sortMotionBars() {
+  const bars = document.getElementById('motionBars');
+  const items = Array.from(bars.children);
+  items.sort((a, b) => Number(b.dataset.value) - Number(a.dataset.value));
+  items.forEach(item => bars.appendChild(item));
+}
+
+// ========== Module 14: Motion Systems & SVG ==========
+
+function replayStaggerDemo() {
+  const preview = document.getElementById('staggerPreview');
+  if (!preview) return;
+  preview.classList.remove('is-playing');
+  void preview.offsetWidth;
+  preview.classList.add('is-playing');
+}
+
+function playEasingDemo() {
+  const rails = document.querySelectorAll('.m14-ease-rail');
+  // Reset all first, then play
+  rails.forEach(rail => rail.classList.remove('is-moved'));
+  void document.body.offsetWidth;
+  rails.forEach(rail => rail.classList.add('is-moved'));
+}
+
+function showM14State(key, button) {
+  document.querySelectorAll('.m14-state-btn').forEach(el => el.classList.remove('active'));
+  if (button) button.classList.add('active');
+  document.querySelectorAll('[data-m14-panel]').forEach(panel => {
+    panel.classList.toggle('is-active', panel.dataset.m14Panel === key);
+  });
+}
+
+function replaySvgDraw() {
+  const svg = document.getElementById('svgDrawSvg');
+  if (!svg) return;
+  svg.classList.remove('is-drawn');
+  void svg.offsetWidth;
+  svg.classList.add('is-drawn');
+}
+
+function toggleExerciseAnswer(button) {
+  const answer = button.nextElementSibling;
+  if (!answer) return;
+  const isOpen = answer.style.display === 'block';
+  answer.style.display = isOpen ? 'none' : 'block';
+  const revealLabel = button.textContent.includes('note') ? 'Reveal note' : 'Reveal answer';
+  const hideLabel = button.textContent.includes('note') ? 'Hide note' : 'Hide answer';
+  button.textContent = isOpen ? revealLabel : hideLabel;
+}
+
+// ========== Module 15: Data Visualisation & Expressive Motion ==========
+let currentVizFilter = 'all';
+
+function flipVizBars(mutator) {
+  const container = document.getElementById('vizBars');
+  if (!container) return;
+  const items = Array.from(container.children);
+  const first = new Map(items.map(item => [item, item.getBoundingClientRect()]));
+  mutator(items, container);
+  const reordered = Array.from(container.children);
+  reordered.forEach(item => {
+    const last = item.getBoundingClientRect();
+    const start = first.get(item);
+    if (!start) return;
+    const deltaX = start.left - last.left;
+    const deltaY = start.top - last.top;
+    item.style.transition = 'none';
+    item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    requestAnimationFrame(() => {
+      item.style.transition = 'transform 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease';
+      item.style.transform = '';
+    });
+  });
+}
+
+function filterVizBars(filter, button) {
+  currentVizFilter = filter;
+  document.querySelectorAll('[data-viz-filter]').forEach(el => el.classList.remove('active'));
+  if (button) button.classList.add('active');
+  document.querySelectorAll('#vizBars .viz-bar-card').forEach(item => {
+    const match = filter === 'all' || item.dataset.category === filter;
+    item.classList.toggle('is-muted', !match);
+  });
+}
+
+function sortVizBars(direction) {
+  const container = document.getElementById('vizBars');
+  if (!container) return;
+  flipVizBars((items, root) => {
+    const sorted = [...items].sort((a, b) => {
+      if (direction === 'reset') return Number(a.dataset.index) - Number(b.dataset.index);
+      return direction === 'asc'
+        ? Number(a.dataset.value) - Number(b.dataset.value)
+        : Number(b.dataset.value) - Number(a.dataset.value);
+    });
+    sorted.forEach(item => root.appendChild(item));
+  });
+  filterVizBars(currentVizFilter);
+}
+
+const canvasState = {
+  particles: [],
+  rafId: null,
+  running: true,
+  count: 28,
+  speed: 0.65,
+  linkDistance: 110
+};
+
+function buildCanvasParticles() {
+  const canvas = document.getElementById('motionCanvas');
+  if (!canvas) return;
+  const { width, height } = canvas;
+  canvasState.particles = Array.from({ length: canvasState.count }, () => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    vx: (Math.random() - 0.5) * canvasState.speed,
+    vy: (Math.random() - 0.5) * canvasState.speed,
+    r: 1.8 + Math.random() * 2.8,
+    hue: 210 + Math.random() * 120
+  }));
+}
+
+function drawCanvasMotion() {
+  const canvas = document.getElementById('motionCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  gradient.addColorStop(0, 'rgba(12, 16, 30, 0.82)');
+  gradient.addColorStop(1, 'rgba(12, 10, 20, 0.92)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  canvasState.particles.forEach((p, i) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+    for (let j = i + 1; j < canvasState.particles.length; j++) {
+      const other = canvasState.particles[j];
+      const dx = other.x - p.x;
+      const dy = other.y - p.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < canvasState.linkDistance) {
+        ctx.strokeStyle = `hsla(${(p.hue + other.hue) / 2}, 90%, 70%, ${0.18 - dist / (canvasState.linkDistance * 8)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(other.x, other.y);
+        ctx.stroke();
+      }
+    }
+
+    ctx.fillStyle = `hsla(${p.hue}, 90%, 72%, 0.95)`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  if (canvasState.running) {
+    canvasState.rafId = requestAnimationFrame(drawCanvasMotion);
+  }
+}
+
+function toggleCanvasMotion() {
+  const btn = document.getElementById('canvasToggleBtn');
+  canvasState.running = !canvasState.running;
+  if (btn) btn.textContent = canvasState.running ? 'Pause motion' : 'Resume motion';
+  if (canvasState.running) drawCanvasMotion();
+  else if (canvasState.rafId) cancelAnimationFrame(canvasState.rafId);
+}
+
+function setCanvasPreset(preset) {
+  const presets = {
+    calm: { count: 24, speed: 0.35, linkDistance: 100 },
+    energetic: { count: 32, speed: 0.9, linkDistance: 115 },
+    dense: { count: 44, speed: 0.55, linkDistance: 90 }
+  };
+  Object.assign(canvasState, presets[preset] || presets.calm);
+  buildCanvasParticles();
+  if (!canvasState.running) {
+    canvasState.running = true;
+    const btn = document.getElementById('canvasToggleBtn');
+    if (btn) btn.textContent = 'Pause motion';
+  }
+  if (canvasState.rafId) cancelAnimationFrame(canvasState.rafId);
+  drawCanvasMotion();
+}
+
+function initAdvancedMotionModules() {
+  toggleModule14Dashboard();
+  showConnectedState('payments', document.querySelector('.state-row[data-state-key="payments"]'));
+  setFlowStage(1, document.querySelector('[data-flow-chip]'));
+  filterVizBars('all', document.querySelector('[data-viz-filter]'));
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    canvasState.running = false;
+    const btn = document.getElementById('canvasToggleBtn');
+    if (btn) btn.textContent = 'Resume motion';
+  }
+  buildCanvasParticles();
+  drawCanvasMotion();
+}
+
 // ========== Search ==========
 let searchIndex = [];
 let searchSelectedIdx = -1;
@@ -6791,7 +8782,7 @@ function runSearch(query) {
   const q = query.trim().toLowerCase();
 
   if (!q) {
-    container.innerHTML = '<div class="search-empty">Type to search across all 13 modules</div>';
+    container.innerHTML = '<div class="search-empty">Type to search across all 16 modules</div>';
     return;
   }
 
@@ -6902,7 +8893,7 @@ function openSearch() {
   overlay.classList.add('open');
   const input = document.getElementById('searchInput');
   input.value = '';
-  document.getElementById('searchResults').innerHTML = '<div class="search-empty">Type to search across all 13 modules</div>';
+  document.getElementById('searchResults').innerHTML = '<div class="search-empty">Type to search across all 16 modules</div>';
   searchSelectedIdx = -1;
   setTimeout(() => input.focus(), 50);
 }
@@ -6924,18 +8915,146 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// ========== Module 16: Architecture, Systems & Tradeoffs ==========
+
+const FILE_STRUCTURES = {
+  single: {
+    tree: `<span style="color:var(--accent-light);">📄 Button.html</span>
+<span style="color:var(--text-muted); font-size:12px; padding-left:8px;">— styles, markup, and logic all in one file</span>`,
+    notes: `<div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Best for:</strong> demos, prototypes, learning exercises, isolated widgets</div>
+<div style="margin-bottom:12px;"><strong style="color:var(--green);">Pros:</strong> zero context-switching, easy to share, instant to understand</div>
+<div style="margin-bottom:12px;"><strong style="color:var(--red);">Cons:</strong> doesn't scale past ~200 lines; logic, style, and structure blend together</div>
+<div><strong style="color:var(--text-primary);">Rule:</strong> if you're copying a single file to demonstrate something, this is correct. If you're building a product, reconsider.</div>`
+  },
+  split: {
+    tree: `<span style="color:var(--blue);">📁 button/</span>
+<span style="color:var(--text-secondary);">  ├─ </span><span style="color:var(--green);">button.html</span>
+<span style="color:var(--text-secondary);">  ├─ </span><span style="color:var(--blue);">button.css</span>
+<span style="color:var(--text-secondary);">  └─ </span><span style="color:var(--orange);">button.js</span>`,
+    notes: `<div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Best for:</strong> medium-complexity components; teams where different roles own style vs logic</div>
+<div style="margin-bottom:12px;"><strong style="color:var(--green);">Pros:</strong> clear separation of concerns; each file has one job; easier to lint, diff, and review</div>
+<div style="margin-bottom:12px;"><strong style="color:var(--red);">Cons:</strong> requires navigating between files; names can drift; harder to copy a component wholesale</div>
+<div><strong style="color:var(--text-primary);">Rule:</strong> good default for most web projects where HTML, CSS, and JS have separate owners or toolchains.</div>`
+  },
+  folders: {
+    tree: `<span style="color:var(--accent-light);">📁 components/</span>
+<span style="color:var(--text-secondary);">  └─ </span><span style="color:var(--blue);">📁 Button/</span>
+<span style="color:var(--text-secondary);">       ├─ </span><span style="color:var(--green);">Button.tsx</span>
+<span style="color:var(--text-secondary);">       ├─ </span><span style="color:var(--blue);">Button.module.css</span>
+<span style="color:var(--text-secondary);">       ├─ </span><span style="color:var(--pink);">Button.test.tsx</span>
+<span style="color:var(--text-secondary);">       ├─ </span><span style="color:var(--orange);">Button.stories.tsx</span>
+<span style="color:var(--text-secondary);">       └─ </span><span style="color:var(--text-muted);">index.ts</span>`,
+    notes: `<div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Best for:</strong> shared component libraries, design systems, large product teams</div>
+<div style="margin-bottom:12px;"><strong style="color:var(--green);">Pros:</strong> self-contained — delete the folder to delete the component; easy to add tests and stories; clean public API via index.ts</div>
+<div style="margin-bottom:12px;"><strong style="color:var(--red);">Cons:</strong> overhead for simple components; folder-per-component can feel bureaucratic at small scale</div>
+<div><strong style="color:var(--text-primary);">Rule:</strong> use when a component will be shared across pages or teams and needs its own tests, documentation, and versioning.</div>`
+  }
+};
+
+function showFileStructure(type, btn) {
+  document.querySelectorAll('#module16 .viz-chip').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes('showFileStructure')) b.classList.remove('active');
+  });
+  if (btn) btn.classList.add('active');
+  const data = FILE_STRUCTURES[type];
+  document.getElementById('fileTreeDisplay').innerHTML = data.tree;
+  document.getElementById('fileStructureNotes').innerHTML = data.notes;
+}
+
+const CONSISTENCY_STRATEGIES = {
+  rigid: `<div style="color:var(--red); font-weight:700; margin-bottom:12px;">❌ Too rigid — no customization possible</div>
+<div style="color:var(--text-secondary); font-size:13px; margin-bottom:12px;">"We need the card to have a red border for error state."<br>"You can't — the Card component doesn't support that. You'll have to build a separate ErrorCard."</div>
+<pre style="font-size:12px; line-height:1.7;"><span class="highlight-comment">// No escape hatches. Every deviation requires a new component.</span>
+<span class="highlight-prop">&lt;Card title=</span><span class="highlight-css">"Error"</span> <span class="highlight-prop">/&gt;</span>
+<span class="highlight-comment">// → fork → ErrorCard → two things to maintain forever</span></pre>
+<div style="margin-top:12px; font-size:13px; color:var(--text-muted);">Result: consumers fork the component. You now maintain two.</div>`,
+  balanced: `<div style="color:var(--green); font-weight:700; margin-bottom:12px;">✓ Balanced — strong defaults, deliberate escape hatches</div>
+<div style="color:var(--text-secondary); font-size:13px; margin-bottom:12px;">"We need the card to have a red border for error state."<br>"Pass <code style='color:var(--accent-light);'>variant="error"</code> — it's already documented. For truly one-off styling, className is there."</div>
+<pre style="font-size:12px; line-height:1.7;"><span class="highlight-prop">&lt;Card</span>
+  <span class="highlight-val">variant</span>=<span class="highlight-css">"error"</span>           <span class="highlight-comment">// constrained to the system</span>
+  <span class="highlight-val">className</span>=<span class="highlight-css">"mt-8"</span>       <span class="highlight-comment">// one-off layout override</span>
+<span class="highlight-prop">/&gt;</span></pre>
+<div style="margin-top:12px; font-size:13px; color:var(--text-muted);">Result: common cases are easy, uncommon cases are possible, no forks needed.</div>`,
+  flexible: `<div style="color:var(--orange); font-weight:700; margin-bottom:12px;">⚠️ Too flexible — a stylesheet in disguise</div>
+<div style="color:var(--text-secondary); font-size:13px; margin-bottom:12px;">"We need the card to have a red border for error state."<br>"Sure, just use borderColor, borderWidth, borderStyle, padding, background… any combination you want."</div>
+<pre style="font-size:12px; line-height:1.7;"><span class="highlight-prop">&lt;Card</span>
+  <span class="highlight-val">borderColor</span>=<span class="highlight-css">"#f87171"</span>
+  <span class="highlight-val">borderWidth</span>=<span class="highlight-css">{2}</span>
+  <span class="highlight-val">borderRadius</span>=<span class="highlight-css">{6}</span>
+  <span class="highlight-val">padding</span>=<span class="highlight-css">"16px 20px"</span>
+  <span class="highlight-val">background</span>=<span class="highlight-css">"rgba(248,113,113,0.08)"</span>
+<span class="highlight-prop">/&gt;</span></pre>
+<div style="margin-top:12px; font-size:13px; color:var(--text-muted);">Result: every instance looks different. Consistency is gone. This isn't a component — it's a div with extra steps.</div>`
+};
+
+function showConsistencyStrategy(type, btn) {
+  document.querySelectorAll('#module16 .viz-chip').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes('showConsistencyStrategy')) b.classList.remove('active');
+  });
+  if (btn) btn.classList.add('active');
+  document.getElementById('consistencyStrategyDisplay').innerHTML = CONSISTENCY_STRATEGIES[type];
+}
+
+function updateMotionBudget(val) {
+  const n = parseInt(val);
+  document.getElementById('motionBudgetCount').textContent = n;
+  const boxes = document.getElementById('motionBudgetBoxes');
+  const status = document.getElementById('motionBudgetStatus');
+
+  boxes.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const box = document.createElement('div');
+    const hue = (i / n) * 260 + 200;
+    box.style.cssText = `width:20px;height:20px;border-radius:4px;background:hsl(${hue},70%,55%);animation:motionBudgetPulse 0.8s ${(i * 30) % 400}ms ease-in-out infinite alternate;`;
+    boxes.appendChild(box);
+  }
+
+  let msg, bg, color;
+  if (n <= 20) {
+    msg = `${n} elements — well within budget. Compositor handles this with ease at 60fps.`;
+    bg = 'rgba(52,211,153,0.12)'; color = 'var(--green)';
+  } else if (n <= 80) {
+    msg = `${n} elements — moderate. Still manageable on most devices, but profile on mobile before shipping.`;
+    bg = 'rgba(251,146,60,0.12)'; color = 'var(--orange)';
+  } else {
+    msg = `${n} elements — high risk. This many simultaneous animations can drop frames on mid-range devices. Consider staggering, virtualization, or Canvas.`;
+    bg = 'rgba(248,113,113,0.12)'; color = 'var(--red)';
+  }
+  status.style.cssText = `background:${bg};color:${color};border:1px solid ${color};border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;`;
+  status.textContent = msg;
+}
+
 // ========== Init ==========
 window.addEventListener('DOMContentLoaded', () => {
   updateColorDemo();
   initPlaygrounds();
   updateSpacingDemo();
   updateContrast();
+  initAdvancedMotionModules();
   // Initialize theme display
   document.getElementById('themeTokenDisplay').textContent = themes.dark.tokens;
   // Initialize button state demo
   setButtonState('default', document.querySelector('.state-trigger.active'));
   // Build search index after all content is rendered
   buildSearchIndex();
+  // Module 16: initialize interactive demos
+  showFileStructure('single', null);
+  showConsistencyStrategy('rigid', null);
+  updateMotionBudget(20);
+  // Module 14: auto-play demos when they scroll into view
+  const m14Observers = [
+    { id: 'staggerPreview',  fn: () => replayStaggerDemo() },
+    { id: 'svgDrawSvg',      fn: () => replaySvgDraw() },
+    { id: 'easingPreview',   fn: () => playEasingDemo() },
+  ];
+  m14Observers.forEach(({ id, fn }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { fn(); obs.disconnect(); }
+    }, { threshold: 0.4 });
+    obs.observe(el);
+  });
 });
 </script>
 </body>
